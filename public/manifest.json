@@ -2,7 +2,7 @@
     "name": "WPI Scouter",
     "short_name": "WPI Scouter",
     "start_url": "https://wpi-scouter.herokuapp.com/",
-    "description": "A scouting app for the Vex 2020 game Change Up made by WPI VexU"
+    "description": "A scouting app for the Vex 2020 game Change Up made by WPI VexU",
 	"display": "standalone",
     "orientation": "portrait",
     "lang": "English"
