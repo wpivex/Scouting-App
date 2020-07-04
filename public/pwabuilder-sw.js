@@ -11,7 +11,7 @@ self.addEventListener("message", (event) => {
   }
 });
 
-const bgSyncPlugin = new workbox-background-sync.BackgroundSyncPlugin(QUEUE_NAME, {
+const bgSyncPlugin = new workbox.backgroundSync.Plugin(QUEUE_NAME, {
   maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
 });
 
