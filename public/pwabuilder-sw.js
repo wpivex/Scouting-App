@@ -1,15 +1,26 @@
-import {BackgroundSyncPlugin} from 'workbox-background-sync';
-import {registerRoute} from 'workbox-routing';
-import {NetworkOnly} from 'workbox-strategies';
+// This is the "Offline copy of assets" service worker
 
-const bgSyncPlugin = new BackgroundSyncPlugin('myQueueName', {
+const CACHE = "pwabuilder-offline";
+const QUEUE_NAME = "bgSyncQueue";
+
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
+const bgSyncPlugin = new workbox-background-sync.BackgroundSyncPlugin(QUEUE_NAME, {
   maxRetentionTime: 24 * 60 // Retry for max of 24 Hours (specified in minutes)
 });
 
-registerRoute(
-  /\/api\/.*\/*.json/,
-  new NetworkOnly({
-    plugins: [bgSyncPlugin]
-  }),
-  'POST'
+workbox.routing.registerRoute(
+  new RegExp('/*'),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: CACHE,
+    plugins: [
+      bgSyncPlugin
+    ]
+  })
 );
