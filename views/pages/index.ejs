@@ -13,7 +13,49 @@
 	document.body.appendChild(el);
 </script>
 
+<script data-cfasync="false" type="text/javascript">	
+	jQuery( document ).ready(function( $ ) {
+		// variable to hold request
+		var request;
+		var val = "data";
+		// bind to the submit event of our form
+		$("#sendData").submit(function(event){
+			// abort any pending request
+			if (request) {
+				request.abort();
+			}
+			// setup some local variables
+			var $form = $(this);
+			// let's select and cache all the fields
+			var $inputs = $form.find("input, select, button, textarea");
+			// serialize the data in the form
+			var serializedData = $form.serialize();
+	​
+			if (val !== "") {
+				// fire off the request to /form.php
+				request = $.ajax({
+					url: "https://script.google.com/macros/s/AKfycbx91LRDnkhArIkw6e15RzmVW30IatTbzMmZlmTIpOas--0mBCLK/exec",
+					type: "post",
+					data: serializedData
+				});
+	​
+				// callback handler that will be called on failure
+				request.fail(function (jqXHR, textStatus, errorThrown){
+					// log the error to the console
+					console.error(
+						"The following error occured: "+
+						textStatus, errorThrown
+					);
+				});
+			}
+			// prevent default posting of form
+			event.preventDefault();
+		});
+	});
+</script>
+
   <% include ../partials/nav.ejs %>
+  <button id="sendData" type="submit" value="Send">Send data</button>
   
 <div class="jumbotron text-center">
   <div class="container">
