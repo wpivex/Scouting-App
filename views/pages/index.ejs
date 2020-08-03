@@ -30,7 +30,7 @@
 			url: "https://script.google.com/macros/s/AKfycbx91LRDnkhArIkw6e15RzmVW30IatTbzMmZlmTIpOas--0mBCLK/exec",
 			type: "post",
 			data: {"Team Number": document.getElementById("number").value, "Autonomous Bonus": document.getElementById("autoBonus").value,
-			"Balls Scored": document.getElementById("scored").value, "Rows Scored": document.getElementById("rows").value}
+			"Balls Scored": document.getElementById("scored").value, "Rows Scored": document.getElementById("rows").value, "Won?": document.getElementById("won").value}
 		});
 		// callback handler that will be called on failure
 		request.fail(function (jqXHR, textStatus, errorThrown){
@@ -69,6 +69,8 @@
   <input type="text" id="scored" name="scored"><br><br>
   <label for="fname">Rows scored: </label><br>
   <input type="text" id="rows" name="rows"><br><br>
+  <label for="fname">Won the match?: </label>
+  <input type="checkbox" name="won" value="1">
   <button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
   <p id="error"></p><br><br>
 </div>
