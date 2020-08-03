@@ -29,7 +29,7 @@
 		request = $.ajax({
 			url: "https://script.google.com/macros/s/AKfycbx91LRDnkhArIkw6e15RzmVW30IatTbzMmZlmTIpOas--0mBCLK/exec",
 			type: "post",
-			data: {"Team Number": document.getElementById("number").value, "Autonomous Bonus": document.getElementById("autoBonus").value,
+			data: {"Team Name": document.getElementById("name").value, "Autonomous Bonus": document.getElementById("autoBonus").value,
 			"Balls Scored": document.getElementById("scored").value, "Rows Scored": document.getElementById("rows").value, "Won?": document.getElementById("won").checked}
 		});
 		// callback handler that will be called on failure
@@ -57,8 +57,8 @@
   </div>
 </div>
 <div class="container" style="text-align: center">
-  <label for="fname">Team number: </label><br>
-  <input type="text" id="number" name="number"><br><br>
+  <label for="fname">Team Name: </label><br>
+  <input type="text" id="name" name="name"><br><br>
   <label for="fname">Autonomous bonus: </label><br>
   <select name="autoBonus" id="autoBonus">
 	<option value=0>0 points</option>
