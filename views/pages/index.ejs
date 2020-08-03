@@ -34,7 +34,7 @@
 		});
 		// callback handler that will be called on failure
 		request.fail(function (jqXHR, textStatus, errorThrown){
-			document.getElementById("demo").innerHTML = "error";
+			document.getElementById("error").innerHTML = "error";
 			// log the error to the console
 			console.error(
 				"The following error occured: "+
@@ -52,7 +52,7 @@
   
 <div class="jumbotron text-center">
   <div class="container">
-    <h1>Scouting App</h1>
+    <h1>Scouting App</h1><br>
     <p>Record the events of the match for your assigned robot</p>
   </div>
 </div>
@@ -70,7 +70,7 @@
   <label for="fname">Rows scored: </label><br>
   <input type="text" id="rows" name="rows"><br><br>
   <button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
-  <p id="demo"></p>
+  <p id="error"></p><br><br>
 </div>
 
 
