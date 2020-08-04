@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <% include ../partials/header.ejs %>
+	<% include ../partials/header.ejs %>
 </head>
 
 <body style="background: #A9B0B7">
@@ -13,52 +13,95 @@
 	document.body.appendChild(el);
 </script>
 <meta 
-     name='viewport' 
-     content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
+		 name='viewport' 
+		 content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
 />
-  
+	
 <div class="jumbotron text-center">
-  <div class="container">
-    <h1>Scouting App</h1><br>
-    <p>Record the events of the match for your assigned robot</p>
-  </div>
+	<div class="container">
+		<h1>Scouting App</h1><br>
+		<p>Record the events of the match for your assigned robot</p>
+	</div>
 </div>
 <div class="container" style="text-align: center">
-  <label for="fname">Team name: </label><br>
-  <input type="text" id="name" name="name"><br><br>
-  <button type="button" class="collapsible">Autonomous</button>
-  <div class="content"><br>
-	  <label for="fname">Autonomous bonus: </label><br>
-	  <select name="autoBonus" id="autoBonus">
-		<option value=0>0 points</option>
-		<option value=3>3 points</option>
-		<option value=6>6 points</option>
-	  </select><br><br>
-  </div><br><br>
-  <label for="fname">Balls scored: </label><br>
-  <input type="number" id="scored" name="scored"><br><br>
-  <label for="fname">Rows scored: </label><br>
-  <input type="number" id="rows" name="rows"><br><br>
-  <label for="fname">Won the match?: </label>
-  <input type="checkbox" id="won" value="1"><br><br>
-  <button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
-  <p id="error"></p><br><br>
-</div>
+	<button type="button" class="collapsible">General</button>
+	<div class="content"><br>
+		<label for="fname">Match number: </label><br>
+		<input type="number" id="match" name="match"><br><br>
+		<div class="sideToggle toggle" style="background-color: #AC2B37; width: 15%; border-color: #cc3342;">Red</div><br>
+		<label for="fname">Team name: </label><br>
+		<input type="text" id="name" name="name"><br><br>
+		<div class="robotToggle toggle" style="background-color: #FFC300; width: 15%; border-color: #FFC300;">15 inch</div><br>
+	</div><br><br>
+	<button type="button" class="collapsible">Autonomous Scoring</button>
+	<div class="content"><br>
+		<label for="fname">Balls scored: </label><br>
+		<input type="number" id="ballsAuto" name="ballsAuto"><br><br>
+		<label for="fname">Goals scored: </label><br>
+		<input type="number" id="goalsAuto" name="goalsAuto"><br><br>
+		<label for="fname">Rows scored: </label><br>
+		<input type="number" id="rowsAuto" name="rowsAuto"><br><br>
+	</div><br><br>
+	<button type="button" class="collapsible">Teleoperated Scoring</button>
+	<div class="content"><br>
+		<label for="fname">Balls scored: </label><br>
+		<input type="number" id="ballsTeleop" name="ballsTeleop"><br><br>
+		<label for="fname">Goals scored: </label><br>
+		<input type="number" id="goalsTeleop" name="goalsTeleop"><br><br>
+		<label for="fname">Rows scored: </label><br>
+		<input type="number" id="rowsTeleop" name="rowsTeleop"><br><br>
+		<div class="cycleToggle toggle" style="background-color: #FF0000; width: 15%; border-color: #ff3333;">Low cycle speed</div><br>
+	</div><br><br>
+	<button type="button" class="collapsible">Strategy</button>
+	<div class="content"><br>
+		<label for="fname">Fast drive:  </label>
+		<input type="checkbox" id="fastDrive" name="fastDrive" value="1"><br><br>
+		<label for="fname">Mobility: </label><br>
+		<input type="range" min="0" max="10" id="mobility" name="mobility" list="steplist">
+		<datalist id="steplist" style="--list-length: 11;"><!--
+		  ---><option>0</option><!--
+		  ---><option>1</option><!--
+		  ---><option>2</option><!--
+		  ---><option>3</option><!--
+		  ---><option>4</option><!--
+		  ---><option>5</option><!--
+		  ---><option>6</option><!--
+		  ---><option>7</option><!--
+		  ---><option>8</option><!--
+		  ---><option>9</option><!--
+		  ---><option>10</option><!--
+		---></datalist><br><br>
+		<label for="fname">Driver comments: </label><br>
+		<textarea id="comment" name="comment" rows="4" cols="50"></textarea><br><br>
+		<label for="fname">General Strategy: </label><br>
+		<select name="genStrat" id="genStrat">
+			<option value="Strat1">Strategy 1</option>
+			<option value="Strat2">Strategy 2</option>
+			<option value="Strat3">Strategy 3</option>
+		</select><br><br>
+		<label for="fname"> Offense: </label><br>
+		<br><br>
+		<label for="fname"> Defense: </label><br>
+		<br><br>
+	</div><br><br>
+	<button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
+	<p id="error"></p><br><br>
+</div><br><br>
 
 <script>
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
 for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
+	coll[i].addEventListener("click", function() {
+		this.classList.toggle("active");
+		var content = this.nextElementSibling;
+		if (content.style.display === "block") {
+			content.style.display = "none";
+		} else {
+			content.style.display = "block";
+		}
+	});
 }
 </script>
 
@@ -93,6 +136,44 @@ for (i = 0; i < coll.length; i++) {
 		// prevent default posting of form
 		event.preventDefault();
 	}
+	
+	$(".sideToggle").click(function() {
+		if ($(this).css('background-color')=='rgb(172, 43, 55)') {
+			$(this).css('background-color', '#4d4dff');
+			$(this).css('border-color', '#8080ff');
+			$(this).text("Blue");
+		} else {
+			$(this).css('background-color', '#AC2B37');
+			$(this).css('border-color', '#cc3342');
+			$(this).text("Red");
+		}
+   });
+   
+   //replace send data button, look into slider for mobility, and do plus and minus buttons for scoring fields
+   $(".robotToggle").click(function() {
+		if ($(this).css('background-color')=="rgb(255, 195, 0)") {
+			$(this).css('background-color', '#ff8000');
+			$(this).css('border-color', '#ff8000');
+			$(this).text("24 inch");
+		} else {
+			$(this).css('background-color', '#FFC300');
+			$(this).css('border-color', '#FFC300');
+			$(this).text("15 inch");
+		}
+	});
+   
+   $(".cycleToggle").click(function() {
+		console.log($(this).css('background-color'));
+		if ($(this).css('background-color')=='rgb(0, 128, 0)') {
+			$(this).css('background-color', '#FF0000');
+			$(this).css('border-color', '#ff3333');
+			$(this).text("Low cycle speed");
+		} else {
+			$(this).css('background-color', '#008000');
+			$(this).css('border-color', '#00b300');
+			$(this).text("High cycle speed");
+	   }
+	});
 </script>
 
 </body>

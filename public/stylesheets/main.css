@@ -47,3 +47,42 @@
   overflow: hidden;
   background-color: #f1f1f1;
 }
+
+.toggle {
+	height: auto;
+	padding: 18px;
+	margin: auto;
+	color: white;
+	border-style: outset;
+	border-width: 5px;
+	cursor: pointer;
+	user-select: none;
+}
+
+/* style range */
+input[type=range] {
+    width: 30%!important;
+    max-width: 30%;
+    text-align:center;
+	margin: 0;
+	display: inline;
+}
+
+/* style datalist */
+input[type=range] + datalist {
+    display: block;
+    margin-top: -4px;
+}
+input[type=range] + datalist option {
+    display: inline-block;
+    width: calc((30% - 12px) / (var(--list-length) - 1));
+    text-align: center;
+}
+input[type=range] + datalist option:first-child {
+    width: calc((30% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+    text-align: left;
+}
+input[type=range] + datalist option:last-child {
+    width: calc((30% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+    text-align: right;
+}
