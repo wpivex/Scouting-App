@@ -16,6 +16,51 @@
      name='viewport' 
      content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
 />
+  
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1>Scouting App</h1><br>
+    <p>Record the events of the match for your assigned robot</p>
+  </div>
+</div>
+<div class="container" style="text-align: center">
+  <label for="fname">Team name: </label><br>
+  <input type="text" id="name" name="name"><br><br>
+  <button type="button" class="collapsible">Autonomous</button>
+  <div class="content"><br>
+	  <label for="fname">Autonomous bonus: </label><br>
+	  <select name="autoBonus" id="autoBonus">
+		<option value=0>0 points</option>
+		<option value=3>3 points</option>
+		<option value=6>6 points</option>
+	  </select><br><br>
+  </div><br><br>
+  <label for="fname">Balls scored: </label><br>
+  <input type="number" id="scored" name="scored"><br><br>
+  <label for="fname">Rows scored: </label><br>
+  <input type="number" id="rows" name="rows"><br><br>
+  <label for="fname">Won the match?: </label>
+  <input type="checkbox" id="won" value="1"><br><br>
+  <button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
+  <p id="error"></p><br><br>
+</div>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
 
 <script data-cfasync="false" type="text/javascript">
 	function sendInfo() {
@@ -49,32 +94,6 @@
 		event.preventDefault();
 	}
 </script>
-  
-<div class="jumbotron text-center">
-  <div class="container">
-    <h1>Scouting App</h1><br>
-    <p>Record the events of the match for your assigned robot</p>
-  </div>
-</div>
-<div class="container" style="text-align: center">
-  <label for="fname">Team name: </label><br>
-  <input type="text" id="name" name="name"><br><br>
-  <label for="fname">Autonomous bonus: </label><br>
-  <select name="autoBonus" id="autoBonus">
-	<option value=0>0 points</option>
-	<option value=3>3 points</option>
-	<option value=6>6 points</option>
-  </select><br><br>
-  <label for="fname">Balls scored: </label><br>
-  <input type="number" id="scored" name="scored"><br><br>
-  <label for="fname">Rows scored: </label><br>
-  <input type="number" id="rows" name="rows"><br><br>
-  <label for="fname">Won the match?: </label>
-  <input type="checkbox" id="won" value="1"><br><br>
-  <button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
-  <p id="error"></p><br><br>
-</div>
-
 
 </body>
 </html>
