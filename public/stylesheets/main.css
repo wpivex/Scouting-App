@@ -32,6 +32,7 @@
 	margin: 10px;
 	width: 25px;
 	color: white;
+	outline: none;
 }
 
 .decrement {
