@@ -28,10 +28,10 @@
 	<div class="content"><br>
 		<label for="fname">Match number: </label><br>
 		<input type="number" id="match" name="match"><br><br>
-		<div class="sideToggle toggle" style="background-color: #AC2B37; border-color: #cc3342;">Red</div><br>
+		<div class="sideToggle toggle" id="side" style="background-color: #AC2B37; border-color: #cc3342;">Red</div><br>
 		<label for="fname">Team name: </label><br>
 		<input type="text" id="name" name="name"><br><br>
-		<div class="robotToggle toggle" style="background-color: #FFC300; border-color: #FFC300;">15 inch</div><br>
+		<div class="robotToggle toggle" id="robot" style="background-color: #FFC300; border-color: #FFC300;">15 inch</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Autonomous Scoring</button>
 	<div class="content"><br>
@@ -50,7 +50,7 @@
 		<input type="number" id="goalsTeleop" name="goalsTeleop"><br><br>
 		<label for="fname">Rows scored: </label><br>
 		<input type="number" id="rowsTeleop" name="rowsTeleop"><br><br>
-		<div class="cycleToggle toggle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br>
+		<div class="cycleToggle toggle" id="cycle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Strategy</button>
 	<div class="content"><br>
@@ -75,9 +75,9 @@
 		<textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br>
 		<label for="fname">General Strategy: </label><br>
 		<select name="genStrat" id="genStrat">
-			<option value="Strat1">Strategy 1</option>
-			<option value="Strat2">Strategy 2</option>
-			<option value="Strat3">Strategy 3</option>
+			<option value="Strategy 1">Strategy 1</option>
+			<option value="Strategy 2">Strategy 2</option>
+			<option value="Strategy 3">Strategy 3</option>
 		</select><br><br>
 		<label for="fname"> Offense: </label><br>
 		<br><br>
@@ -86,7 +86,7 @@
 	</div><br><br><br>
 	<button onclick="sendInfo()" id="sendData" type="submit" value="Send">Send data</button>
 	<p id="error"></p><br><br>
-</div><br><br>
+</div><br>
 
 <script>
 var coll = document.getElementsByClassName("collapsible");
@@ -117,8 +117,23 @@ for (i = 0; i < coll.length; i++) {
 		request = $.ajax({
 			url: "https://script.google.com/macros/s/AKfycbx91LRDnkhArIkw6e15RzmVW30IatTbzMmZlmTIpOas--0mBCLK/exec",
 			type: "post",
-			data: {"Team Name": document.getElementById("name").value, "Autonomous Bonus": document.getElementById("autoBonus").value,
-			"Balls Scored": document.getElementById("scored").value, "Rows Scored": document.getElementById("rows").value, "Won?": document.getElementById("won").checked}
+			data: {
+			"Match #": document.getElementById("match").value, 
+			"Side": document.getElementById("side").style.backgroundColor =='rgb(172, 43, 55)' ? "RED" : "BLUE", 
+			"Name": document.getElementById("name").value, 
+			"Robot": document.getElementById("robot").style.backgroundColor =='rgb(255, 195, 0)' ? 15 : 24, 
+			"Balls Scored (Auto)": document.getElementById("ballsAuto").value, 
+			"Goals Scored (Auto)": document.getElementById("goalsAuto").value, 
+			"Rows Scored (Auto)": document.getElementById("rowsAuto").value, 
+			"Balls Scored (Teleop)": document.getElementById("ballsTeleop").value, 
+			"Goals Scored (Teleop)": document.getElementById("goalsTeleop").value, 
+			"Rows Scored (Teleop)": document.getElementById("rowsTeleop").value, 
+			"Cycle Speed": document.getElementById("cycle").style.backgroundColor =='rgb(0, 128, 0)' ? "HIGH" : "LOW", 
+			"Fast Drive?": document.getElementById("fastDrive").checked,	
+			"Mobility? (0-10)": document.getElementById("mobility").value, 
+			"Driver Comments": document.getElementById("comment").value, 
+			"General Strategy": document.getElementById("genStrat").value
+			}
 		});
 		// callback handler that will be called on failure
 		request.fail(function (jqXHR, textStatus, errorThrown){
@@ -146,7 +161,7 @@ for (i = 0; i < coll.length; i++) {
 		}
    });
    
-   //set to 90% mobile, 50% otherwise, make boxes bigger on mobile, probably 80% to start, replace send data button, look into slider for mobility, and do plus and minus buttons for scoring fields
+   //do plus and minus buttons for scoring fields
    $(".robotToggle").click(function() {
 		if ($(this).css('background-color')=="rgb(255, 195, 0)") {
 			$(this).css('background-color', '#ff8000');

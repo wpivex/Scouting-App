@@ -10,8 +10,6 @@
     color: white;
     max-width: 75%;
     margin: 1em auto 2em; }
-  .navbar + .jumbotron {
-    margin-top: -20px; }
   .jumbotron .lang-logo {
     display: block;
     background: #AC2B37;
