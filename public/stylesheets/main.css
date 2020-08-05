@@ -88,6 +88,20 @@ input[type=range] + datalist option:last-child {
     text-align: right;
 }
 
+#sendData {
+  background-color: #AC2B37;
+  border: outset;
+  color: white;
+  border-color: #cc3342;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-width: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 @media only screen and (max-device-width: 480px) {
 	input[type=range] {
 		width: 90%;
