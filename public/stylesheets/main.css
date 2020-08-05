@@ -57,12 +57,13 @@
 	border-width: 5px;
 	cursor: pointer;
 	user-select: none;
+	width: 15%;
 }
 
 /* style range */
 input[type=range] {
-    width: 100%;
-    max-width: 100%;
+    width: 30%;
+    max-width: 30%;
     text-align:center;
 	margin: 0;
 	display: inline;
@@ -75,14 +76,35 @@ input[type=range] + datalist {
 }
 input[type=range] + datalist option {
     display: inline-block;
-    width: calc((100% - 12px) / (var(--list-length) - 1));
+    width: calc((30% - 12px) / (var(--list-length) - 1));
     text-align: center;
 }
 input[type=range] + datalist option:first-child {
-    width: calc((100% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+    width: calc((30% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
     text-align: left;
 }
 input[type=range] + datalist option:last-child {
-    width: calc((100% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+    width: calc((30% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
     text-align: right;
+}
+
+@media only screen and (max-device-width: 480px) {
+	input[type=range] {
+		width: 90%;
+		max-width: 90%;
+	}
+	
+	.toggle {
+		width: 50%;
+	}
+	
+	input[type=range] + datalist option {
+		width: calc((90% - 12px) / (var(--list-length) - 1));
+	}
+	input[type=range] + datalist option:first-child {
+		width: calc((90% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+	}
+	input[type=range] + datalist option:last-child {
+		width: calc((90% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+	}
 }

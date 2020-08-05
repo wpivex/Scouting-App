@@ -28,10 +28,10 @@
 	<div class="content"><br>
 		<label for="fname">Match number: </label><br>
 		<input type="number" id="match" name="match"><br><br>
-		<div class="sideToggle toggle" style="background-color: #AC2B37; width: 15%; border-color: #cc3342;">Red</div><br>
+		<div class="sideToggle toggle" style="background-color: #AC2B37; border-color: #cc3342;">Red</div><br>
 		<label for="fname">Team name: </label><br>
 		<input type="text" id="name" name="name"><br><br>
-		<div class="robotToggle toggle" style="background-color: #FFC300; width: 15%; border-color: #FFC300;">15 inch</div><br>
+		<div class="robotToggle toggle" style="background-color: #FFC300; border-color: #FFC300;">15 inch</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Autonomous Scoring</button>
 	<div class="content"><br>
@@ -50,7 +50,7 @@
 		<input type="number" id="goalsTeleop" name="goalsTeleop"><br><br>
 		<label for="fname">Rows scored: </label><br>
 		<input type="number" id="rowsTeleop" name="rowsTeleop"><br><br>
-		<div class="cycleToggle toggle" style="background-color: #FF0000; width: 15%; border-color: #ff3333;">Low cycle speed</div><br>
+		<div class="cycleToggle toggle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Strategy</button>
 	<div class="content"><br>
@@ -149,7 +149,7 @@ for (i = 0; i < coll.length; i++) {
 		}
    });
    
-   //replace send data button, look into slider for mobility, and do plus and minus buttons for scoring fields
+   //set to 90% mobile, 50% otherwise, make boxes bigger on mobile, probably 80% to start, replace send data button, look into slider for mobility, and do plus and minus buttons for scoring fields
    $(".robotToggle").click(function() {
 		if ($(this).css('background-color')=="rgb(255, 195, 0)") {
 			$(this).css('background-color', '#ff8000');
