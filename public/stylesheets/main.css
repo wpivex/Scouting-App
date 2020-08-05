@@ -61,8 +61,8 @@
 
 /* style range */
 input[type=range] {
-    width: 30%!important;
-    max-width: 30%;
+    width: 100%;
+    max-width: 100%;
     text-align:center;
 	margin: 0;
 	display: inline;
@@ -75,14 +75,14 @@ input[type=range] + datalist {
 }
 input[type=range] + datalist option {
     display: inline-block;
-    width: calc((30% - 12px) / (var(--list-length) - 1));
+    width: calc((100% - 12px) / (var(--list-length) - 1));
     text-align: center;
 }
 input[type=range] + datalist option:first-child {
-    width: calc((30% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+    width: calc((100% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
     text-align: left;
 }
 input[type=range] + datalist option:last-child {
-    width: calc((30% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
+    width: calc((100% - 12px) / ((var(--list-length) - 1) * 2) + 6px);
     text-align: right;
 }
