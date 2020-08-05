@@ -23,6 +23,25 @@
       max-width: 100%; 
 }
 
+.increment, .decrement {
+	border: none;
+	border-radius: 5px;
+    background-color: #777;
+    padding: 5px;
+    cursor: pointer;
+	margin: 10px;
+	width: 25px;
+	color: white;
+}
+
+.decrement {
+	margin-left: 0px;
+}
+
+.increment:hover, .decrement:hover {
+   background-color: #555;
+}
+
 .collapsible {
   background-color: #777;
   color: white;

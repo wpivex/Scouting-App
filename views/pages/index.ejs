@@ -36,20 +36,32 @@
 	<button type="button" class="collapsible">Autonomous Scoring</button>
 	<div class="content"><br>
 		<label for="fname">Balls scored: </label><br>
-		<input type="number" id="ballsAuto" name="ballsAuto"><br><br>
+		<input type="number" id="ballsAuto" name="ballsAuto" value=0>
+		<button onclick="changeVal(this)" class="ba increment">+</button>
+		<button onclick="changeVal(this)" class="ba decrement">-</button><br><br>
 		<label for="fname">Goals scored: </label><br>
-		<input type="number" id="goalsAuto" name="goalsAuto"><br><br>
+		<input type="number" id="goalsAuto" name="goalsAuto" value=0>
+		<button onclick="changeVal(this)" class="ga increment">+</button>
+		<button onclick="changeVal(this)" class="ga decrement">-</button><br><br>
 		<label for="fname">Rows scored: </label><br>
-		<input type="number" id="rowsAuto" name="rowsAuto"><br><br>
+		<input type="number" id="rowsAuto" name="rowsAuto" value=0>
+		<button onclick="changeVal(this)" class="ra increment">+</button>
+		<button onclick="changeVal(this)" class="ra decrement">-</button><br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Teleoperated Scoring</button>
 	<div class="content"><br>
 		<label for="fname">Balls scored: </label><br>
-		<input type="number" id="ballsTeleop" name="ballsTeleop"><br><br>
+		<input type="number" id="ballsTeleop" name="ballsTeleop" value=0>
+		<button onclick="changeVal(this)" class="bt increment">+</button>
+		<button onclick="changeVal(this)" class="bt decrement">-</button><br><br>
 		<label for="fname">Goals scored: </label><br>
-		<input type="number" id="goalsTeleop" name="goalsTeleop"><br><br>
+		<input type="number" id="goalsTeleop" name="goalsTeleop" value=0>
+		<button onclick="changeVal(this)" class="gt increment">+</button>
+		<button onclick="changeVal(this)" class="gt decrement">-</button><br><br>
 		<label for="fname">Rows scored: </label><br>
-		<input type="number" id="rowsTeleop" name="rowsTeleop"><br><br>
+		<input type="number" id="rowsTeleop" name="rowsTeleop" value=0>
+		<button onclick="changeVal(this)" class="rt increment">+</button>
+		<button onclick="changeVal(this)" class="rt decrement">-</button><br><br>
 		<div class="cycleToggle toggle" id="cycle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Strategy</button>
@@ -103,6 +115,24 @@ for (i = 0; i < coll.length; i++) {
 		}
 	});
 }
+
+//all buttons have changeVal class, increment and decrement classes, unique IDs
+	function changeVal(element) {
+		var change = (element.classList.contains("increment")) ? 1 : -1;
+		if (element.classList.contains("ba")) {
+			document.getElementById("ballsAuto").value = +document.getElementById("ballsAuto").value + change;
+		} else if (element.classList.contains("ga")) {
+			document.getElementById("goalsAuto").value = +document.getElementById("goalsAuto").value + change;
+		} else if (element.classList.contains("ra")) {
+			document.getElementById("rowsAuto").value = +document.getElementById("rowsAuto").value + change;
+		} else if (element.classList.contains("bt")) {
+			document.getElementById("ballsTeleop").value = +document.getElementById("ballsTeleop").value + change;
+		} else if (element.classList.contains("gt")) {
+			document.getElementById("goalsTeleop").value = +document.getElementById("goalsTeleop").value + change;
+		} else if (element.classList.contains("rt")) {
+			document.getElementById("rowsTeleop").value = +document.getElementById("rowsTeleop").value + change;
+		}
+	}
 </script>
 
 <script data-cfasync="false" type="text/javascript">
@@ -161,7 +191,6 @@ for (i = 0; i < coll.length; i++) {
 		}
    });
    
-   //do plus and minus buttons for scoring fields
    $(".robotToggle").click(function() {
 		if ($(this).css('background-color')=="rgb(255, 195, 0)") {
 			$(this).css('background-color', '#ff8000');
