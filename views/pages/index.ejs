@@ -143,11 +143,13 @@ for (i = 0; i < coll.length; i++) {
 		if (request) {
 			request.abort();
 		}
+		var date = new Date();
 		// fire off the request to /form.php
 		request = $.ajax({
 			url: "https://script.google.com/macros/s/AKfycbzkl6ojolFvV2EjGz-qPhAdR2keVPsOTRTr98uX/exec",
 			type: "post",
 			data: {
+			"ID": date.getTime(),
 			"Match #": document.getElementById("match").value, 
 			"Side": document.getElementById("side").style.backgroundColor =='rgb(172, 43, 55)' ? "RED" : "BLUE", 
 			"Name": document.getElementById("name").value, 
