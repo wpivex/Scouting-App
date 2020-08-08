@@ -133,6 +133,19 @@ for (i = 0; i < coll.length; i++) {
 			document.getElementById("rowsTeleop").value = +document.getElementById("rowsTeleop").value + change;
 		}
 	}
+	
+	String.prototype.hashCode = function() {
+		var hash = 0;
+		if (this.length == 0) {
+			return hash;
+		}
+		for (var i = 0; i < this.length; i++) {
+			var char = this.charCodeAt(i);
+			hash = ((hash<<5)-hash)+char;
+			hash = hash & hash; // Convert to 32bit integer
+		}
+		return hash;
+	}
 </script>
 
 <script data-cfasync="false" type="text/javascript">
@@ -146,10 +159,10 @@ for (i = 0; i < coll.length; i++) {
 		var date = new Date();
 		// fire off the request to /form.php
 		request = $.ajax({
-			url: "https://script.google.com/macros/s/AKfycbzkl6ojolFvV2EjGz-qPhAdR2keVPsOTRTr98uX/exec",
+			url: "https://script.google.com/macros/s/AKfycbz3Q1ldmmdkAnNchrhfD450tpyloXky4N5wuf4ELTRk5UhTiDQ/exec",
 			type: "post",
 			data: {
-			"ID": date.getTime(),
+			"Timestamp ID": date.getTime(),
 			"Match #": document.getElementById("match").value, 
 			"Side": document.getElementById("side").style.backgroundColor =='rgb(172, 43, 55)' ? "RED" : "BLUE", 
 			"Name": document.getElementById("name").value, 
