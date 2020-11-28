@@ -6,6 +6,8 @@
 
 <body style="background: #A9B0B7">
 
+<script src="bundle.js"></script>
+
 <script type="module">
 	import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
 	const el = document.createElement('pwa-update');
@@ -102,26 +104,9 @@
 <script>
 var coll = document.getElementsByClassName("collapsible");
 var i;
-
-fetch("/storeMatch", {
-    method: "POST",
-    body: JSON.stringify({
-		match: "yes"
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  });
-
-fetch("/getMatch", {
-    method: "POST",
-    body: JSON.stringify({
-		matchKey: "vex"
-    }),
-    headers: {
-      "Content-Type": "application/json"
-    }
-  }).then(res => res.json()).then(match => console.log(match));
+  
+  set("hi", "earth");
+  get("hi").then(val => console.log(val));
 
 for (i = 0; i < coll.length; i++) {
 	coll[i].addEventListener("click", function() {
@@ -163,11 +148,7 @@ for (i = 0; i < coll.length; i++) {
 			request.abort();
 		}
 		var date = new Date();
-		// fire off the request to /form.php
-		request = $.ajax({
-			url: "https://script.google.com/macros/s/AKfycbz3Q1ldmmdkAnNchrhfD450tpyloXky4N5wuf4ELTRk5UhTiDQ/exec",
-			type: "post",
-			data: {
+		var matchData = {
 			"Timestamp ID": date.getTime(),
 			"Match #": document.getElementById("match").value, 
 			"Side": document.getElementById("side").style.backgroundColor =='rgb(172, 43, 55)' ? "RED" : "BLUE", 
@@ -185,13 +166,31 @@ for (i = 0; i < coll.length; i++) {
 			"Driver Comments": document.getElementById("comment").value, 
 			"General Strategy": document.getElementById("genStrat").value
 			}
+		// fire off the request to /form.php
+		request = $.ajax({
+			url: "https://script.google.com/macros/s/AKfycbz3Q1ldmmdkAnNchrhfD450tpyloXky4N5wuf4ELTRk5UhTiDQ/exec",
+			type: "post",
+			data: matchData
 		});
+		
+		document.getElementById("error").innerHTML = "";
+		//clear();
+		set(matchData["Timestamp ID"], matchData).then(() => 
+			keys().then(matchKeys => {
+				for(key in matchKeys) {
+					//document.getElementById("error").innerHTML += JSON.stringify(matchKeys[key]) + " ";
+					//get(matchKeys[key]).then(val => document.getElementById("error").innerHTML += JSON.stringify(val) + " ");
+				}
+			//document.getElementById("error").innerHTML = matchKeys;
+		}));
+		//document.getElementById("error").innerHTML = JSON.stringify(get("match"));
 		
 		// callback handler that will be called on failure
 		request.fail(function (jqXHR, textStatus, errorThrown){
 			document.getElementById("error").innerHTML = "error";
 			// log the error to the console
-			alert("The following error occured: " + textStatus + " " + errorThrown);
+			//alert("The following error occured: " + textStatus + " " + errorThrown);
+			alert("Something went wrong, match stored locally.");
 		});
 		request.done(function (response, textStatus, jqXHR){
 			// Log a message to the console
