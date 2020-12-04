@@ -15,7 +15,8 @@
     "express": "^4.15.2",
     "idb": "^5.0.7",
     "idb-keyval": "^3.2.0",
-    "pg": "^8.2.1"
+    "pg": "^8.2.1",
+    "qrcode": "^1.4.4"
   },
   "devDependencies": {
     "got": "^11.3.0",

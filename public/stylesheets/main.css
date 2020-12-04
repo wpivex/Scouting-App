@@ -120,6 +120,11 @@ input[type=range] + datalist option:last-child {
   cursor: pointer;
 }
 
+canvas {
+	width: 40%;
+	height: auto;
+}
+
 @media only screen and (max-device-width: 480px) {
 	input[type=range] {
 		width: 90%;
@@ -143,4 +148,13 @@ input[type=range] + datalist option:last-child {
 	textarea {
 		width: 90%;
 	}
+	
+	canvas {
+		width: 90%;
+		height: auto;
+	}
+}
+
+button {
+	margin:0px 10px 0px 10px;
 }

@@ -1,1 +1,1 @@
-var idb = require('idb-keyval');
+var qr = require('qrcode');
