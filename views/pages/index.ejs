@@ -100,7 +100,7 @@
 	</div><br><br><br>
 	<button onclick="sendCurrent()" id="sendData" type="submit" value="SendCurrent">Send current data</button>
 	<button onclick="sendCached()" id="sendData" type="submit" value="SendCached">Send cached data</button><br><br>
-	<canvas id="canvas" width="100" height="100"></canvas><br><br>
+	<canvas id="canvas" width="100" height="100" style="display:none;"></canvas><br><br>
 </div><br>
 
 <script>
@@ -118,11 +118,6 @@ for (i = 0; i < coll.length; i++) {
 		}
 	});
 }
-
-QRCode.toCanvas(document.getElementById('canvas'), 'QR works 😃', function (error) {
-    if (error) console.error(error)
-    console.log('success!');
-  })
 
 //all buttons have changeVal class, increment and decrement classes, unique IDs
 	function changeVal(element) {
@@ -169,12 +164,19 @@ QRCode.toCanvas(document.getElementById('canvas'), 'QR works 😃', function (er
 	
 	function sendCached() {
 		keys().then(matchKeys => {
+			let matches = []
 			for(key in matchKeys) {
 				console.log(key, matchKeys[key]);
-				get(matchKeys[key]).then(val => sendInfo(val, true));
+				get(matchKeys[key]).then(val => {
+					sendInfo(val, true);
+					matches.push(JSON.stringify(val));});
 			}
 			alert("All matches have been uploaded. Clearing local cache.");
 			clear();
+			//need to fix mobile css
+			//let c = document.getElementById('canvas');
+			//c.style.display = "block";
+			//QRCode.toCanvas(c, '{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}', function (error) {if (error) console.error(error)});
 		});
 	}
 	
