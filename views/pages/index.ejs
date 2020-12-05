@@ -100,7 +100,7 @@
 	</div><br><br><br>
 	<button onclick="sendCurrent()" id="sendData" type="submit" value="SendCurrent">Send current data</button>
 	<button onclick="sendCached()" id="sendData" type="submit" value="SendCached">Send cached data</button><br><br>
-	<canvas id="canvas" width="100" height="100" style="display:none;"></canvas><br><br>
+	<canvas id="canvas" width="100" height="100" style="display:block;"></canvas><br><br>
 </div><br>
 
 <script>
@@ -118,6 +118,43 @@ for (i = 0; i < coll.length; i++) {
 		}
 	});
 }
+
+let videoDevice;
+let canvas = document.getElementById('canvas');
+let photo = document.getElementById('photo');
+ 
+navigator.mediaDevices.getUserMedia({video: true}).then(gotMedia).catch(failedToGetMedia);
+ 
+function gotMedia(mediaStream) {
+  // Extract video track.
+  videoDevice = mediaStream.getVideoTracks()[0];
+  // Check if this device supports a picture mode...
+  let captureDevice = new ImageCapture(videoDevice);
+  if (captureDevice) {
+    captureDevice.takePhoto().then(processPhoto).catch(stopCamera);
+    captureDevice.grabFrame().then(processFrame).catch(stopCamera);
+  }
+}
+ 
+function processPhoto(blob) {
+  photo.src = window.URL.createObjectURL(blob);
+}
+ 
+function processFrame(imageBitmap) {
+  canvas.width = imageBitmap.width;
+  canvas.height = imageBitmap.height;
+  canvas.getContext('2d').drawImage(imageBitmap, 0, 0);
+}
+ 
+function stopCamera(error) {
+  console.error(error);
+  if (videoDevice) videoDevice.stop();  // turn off the camera
+}
+ 
+photo.addEventListener('load', function () {
+  // After the image loads, discard the image object to release the memory
+  window.URL.revokeObjectURL(this.src);
+});
 
 //all buttons have changeVal class, increment and decrement classes, unique IDs
 	function changeVal(element) {
@@ -166,17 +203,18 @@ for (i = 0; i < coll.length; i++) {
 		keys().then(matchKeys => {
 			let matches = []
 			for(key in matchKeys) {
-				console.log(key, matchKeys[key]);
+				//console.log(matchKeys[key]);
 				get(matchKeys[key]).then(val => {
 					sendInfo(val, true);
-					matches.push(JSON.stringify(val));});
+					matches.push(JSON.stringify(val));
+					console.log(JSON.stringify(val));
+					QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});});
 			}
 			alert("All matches have been uploaded. Clearing local cache.");
-			clear();
 			//need to fix mobile css
-			//let c = document.getElementById('canvas');
-			//c.style.display = "block";
-			//QRCode.toCanvas(c, '{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}', function (error) {if (error) console.error(error)});
+			let c = document.getElementById('canvas');
+			c.style.display = "block";//'{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}'
+			clear();
 		});
 	}
 	
