@@ -127,7 +127,7 @@ navigator.mediaDevices.getUserMedia({video: true}).then(gotMedia).catch(failedTo
  
 function gotMedia(mediaStream) {
   // Extract video track.
-  videoDevice = mediaStream.getVideoTracks()[0];
+  videoDevice = mediaStream.getVideoTracks()[1];
   // Check if this device supports a picture mode...
   let captureDevice = new ImageCapture(videoDevice);
   if (captureDevice) {
