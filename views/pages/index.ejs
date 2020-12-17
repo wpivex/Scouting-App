@@ -124,7 +124,7 @@ for (i = 0; i < coll.length; i++) {
 const fileSelector = document.getElementById('cameraInput');
   fileSelector.addEventListener('change', (event) => {
     const fileList = event.target.files;
-	document.getElementById("fileListP").innerHTML = fileList;
+	document.getElementById("fileListP").innerHTML = Array.from(fileList);
     //console.log(fileList);
   });
 
