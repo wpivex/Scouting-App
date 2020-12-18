@@ -106,7 +106,7 @@ input[type=range] + datalist option:last-child {
     text-align: right;
 }
 
-#sendData {
+.styledButton {
   background-color: #AC2B37;
   border: outset;
   color: white;
@@ -118,11 +118,21 @@ input[type=range] + datalist option:last-child {
   border-width: 5px;
   font-size: 16px;
   cursor: pointer;
+  margin: 10px;
+  font-weight: normal;
+}
+
+input[type="file"] {
+    display: none;
 }
 
 canvas {
 	width: 40%;
 	height: auto;
+}
+
+h1 {
+	color: white;
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -153,8 +163,4 @@ canvas {
 		width: 90%;
 		height: auto;
 	}
-}
-
-button {
-	margin:0px 10px 0px 10px;
 }

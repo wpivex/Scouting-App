@@ -98,11 +98,16 @@
 		<label for="fname"> Defense: </label><br>
 		<br><br>
 	</div><br><br><br>
-	<button onclick="sendCurrent()" id="sendData" type="submit" value="SendCurrent">Send current data</button>
-	<button onclick="sendCached()" id="sendData" type="submit" value="SendCached">Send cached data</button><br><br>
-	<canvas id="canvas" width="100" height="100" style="display:none;"></canvas><br><br>
-	<input type="file" capture="camera" accept="image/*" id="cameraInput" name="cameraInput" multiple>
-	<p id="fileListP"></p>
+	<button onclick="sendCurrent()" class="styledButton" type="submit" value="SendCurrent">Send current match</button>
+	<button onclick="sendCached()" class="styledButton" type="submit" value="SendCached">Send cached match</button>
+	<label class="styledButton">
+		<input type="file" capture="camera" class="styledButton" accept="image/*" id="cameraInput" name="cameraInput" multiple />
+		Upload QR codes
+	</label><br><br>
+	<p id="fileListP"></p><br><br>
+	<h1>Cached Matches</h1><br><br>
+	<div id="cacheButtons"></div><br><br>
+	<canvas id="canvas" width="100" height="100" style="display:none;"></canvas>
 </div><br>
 
 <script>
@@ -121,58 +126,17 @@ for (i = 0; i < coll.length; i++) {
 	});
 }
 
+set(1607118789248, {"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
+set(1607118789249, {"Timestamp ID":1607118789249,"Match #":"2","Side":"BLUE","Name":"uva","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
+set(1607118789250, {"Timestamp ID":1607118789250,"Match #":"3","Side":"BLUE","Name":"rpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
+set(1607118789251, {"Timestamp ID":1607118789251,"Match #":"4","Side":"BLUE","Name":"vcat","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
+updateButtons();
+
 const fileSelector = document.getElementById('cameraInput');
   fileSelector.addEventListener('change', (event) => {
     const fileList = event.target.files;
 	document.getElementById("fileListP").innerHTML = Array.from(fileList).map(x => x.name);
-    //console.log(fileList);
   });
-
-/*let videoDevice;
-let canvas = document.getElementById('canvas');
-let photo = document.getElementById('photo');
-
-const constraints = {
-  video: {
-    facingMode: {
-      exact: 'environment'
-    }
-  }
-};
- 
-navigator.mediaDevices.getUserMedia({video: true}).then(gotMedia).catch(failedToGetMedia);
- 
-function gotMedia(mediaStream) {
-  // Extract video track.
-  videoDevice = await navigator.mediaDevices.getUserMedia(constraints)[0];
-  //videoDevice = mediaStream.getVideoTracks()[0];
-  // Check if this device supports a picture mode...
-  let captureDevice = new ImageCapture(videoDevice);
-  if (captureDevice) {
-    captureDevice.takePhoto().then(processPhoto).catch(stopCamera);
-    captureDevice.grabFrame().then(processFrame).catch(stopCamera);
-  }
-}
- 
-function processPhoto(blob) {
-  photo.src = window.URL.createObjectURL(blob);
-}
- 
-function processFrame(imageBitmap) {
-  canvas.width = imageBitmap.width;
-  canvas.height = imageBitmap.height;
-  canvas.getContext('2d').drawImage(imageBitmap, 0, 0);
-}
- 
-function stopCamera(error) {
-  console.error(error);
-  if (videoDevice) videoDevice.stop();  // turn off the camera
-}
- 
-photo.addEventListener('load', function () {
-  // After the image loads, discard the image object to release the memory
-  window.URL.revokeObjectURL(this.src);
-});*/
 
 //all buttons have changeVal class, increment and decrement classes, unique IDs
 	function changeVal(element) {
@@ -190,6 +154,28 @@ photo.addEventListener('load', function () {
 		} else if (element.classList.contains("rt")) {
 			document.getElementById("rowsTeleop").value = +document.getElementById("rowsTeleop").value + change;
 		}
+	}
+	
+	function updateButtons() {
+		keys().then(matchKeys => {
+			let cache = document.getElementById("cacheButtons");
+			cache.innerHTML = "";
+			for(key in matchKeys) {
+				let tempKey = JSON.parse(JSON.stringify(matchKeys[key]));
+				get(matchKeys[key]).then(val => {
+					let btn = document.createElement("BUTTON");
+					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
+					btn.onclick = () => {
+						console.log("Clicked " + val["Match #"]);
+						let c = document.getElementById('canvas');
+						QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
+						c.style.display = "block";
+					}
+					btn.className = "styledButton";
+					cache.appendChild(btn);
+				});
+			}
+		});
 	}
 </script>
 
@@ -218,21 +204,42 @@ photo.addEventListener('load', function () {
 	}
 	
 	function sendCached() {
+		let matches = []
 		keys().then(matchKeys => {
-			let matches = []
 			for(key in matchKeys) {
-				//console.log(matchKeys[key]);
 				get(matchKeys[key]).then(val => {
 					sendInfo(val, true);
 					matches.push(JSON.stringify(val));
 					console.log(JSON.stringify(val));
-					QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});});
+					QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
+				});
 			}
 			alert("All matches have been uploaded. Clearing local cache.");
 			//need to fix mobile css
 			let c = document.getElementById('canvas');
 			c.style.display = "block";//'{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}'
 			clear();
+			updateButtons();
+		});
+	}
+	
+	function updateButtons() {
+		keys().then(matchKeys => {
+			let cache = document.getElementById("cacheButtons");
+			cache.innerHTML = "";
+			for(key in matchKeys) {
+				let tempKey = JSON.parse(JSON.stringify(matchKeys[key]));
+				get(matchKeys[key]).then(val => {
+					let btn = document.createElement("BUTTON");
+					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
+					btn.onclick = () => {
+						let c = document.getElementById('canvas');
+						QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
+						c.style.display = "block";
+					}
+					cache.appendChild(btn);
+				});
+			}
 		});
 	}
 	
