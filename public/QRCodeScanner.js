@@ -137,7 +137,9 @@ class QRCodeScanner {
     // open webcam device
     navigator.mediaDevices.getUserMedia({
       audio: false,
-      video: true
+      video: {
+		  facingMode: { exact: "environment" }
+	  }
     }).then(function(stream) {
       self.stream = stream;
       self.video.srcObject = stream;
