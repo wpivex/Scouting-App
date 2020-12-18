@@ -7,7 +7,10 @@
 <body style="background: #A9B0B7">
 
 <script src="bundle.js"></script>
+<script src="QRCodeScanner.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"></script>
 
 <script type="module">
 	import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
@@ -100,17 +103,43 @@
 	</div><br><br><br>
 	<button onclick="sendCurrent()" class="styledButton" type="submit" value="SendCurrent">Send current match</button>
 	<button onclick="sendCached()" class="styledButton" type="submit" value="SendCached">Send cached matches</button>
-	<label class="styledButton">
-		<input type="file" capture="camera" class="styledButton" accept="image/*" id="cameraInput" name="cameraInput" multiple />
-		Upload QR codes
-	</label><br><br>
+	<button id="btn-open-qrcode-scanner" class="styledButton">Upload a QR Code</button><br><br>
 	<p id="fileListP"></p><br><br>
 	<h1>Cached Matches</h1><br><br>
 	<div id="cacheButtons"></div><br><br>
+	
+	<div id="qrcode-scanner" style="display: none; border: 1px solid gray;">
+		<div style="background-color: #ccc; padding: 6px;">
+		  <strong name="title">QR Code Scanner</strong>
+		  <span name="close" title="Close" style="cursor: pointer; font-weight: bold; float: right;">&times;</span>
+		</div>
+		<div name="pane-webcam" style="display: none;">
+		  <video name="video" autoplay></video>
+		  <canvas name="canvas" style="display: none;"></canvas>
+		</div>
+		<div>
+		  <button name="close" style="width: 100%;">&times; Close</button>
+		</div>
+	</div>
+  
 	<canvas id="canvas" width="100" height="100" style="display:none;"></canvas>
 </div><br>
 
 <script>
+// create QRCodeScanner instance
+window.qrcodeScanner = new QRCodeScanner({ rootSelector: "#qrcode-scanner" });
+
+  $(document).on("click", "#btn-open-qrcode-scanner", function(e) {
+    // open QRCodeScanner webcam scanner
+    qrcodeScanner.open((err, result) => {
+		let val = JSON.parse(result.data);
+		console.log("QRCodeScanner result:", val);
+		set(val["Timestamp ID"], val).then(() =>
+		alert("Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '") stored in cache.'));
+		updateButtons();
+    });
+  });
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
@@ -126,17 +155,11 @@ for (i = 0; i < coll.length; i++) {
 	});
 }
 
-set(1607118789248, {"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
+/*set(1607118789248, {"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
 set(1607118789249, {"Timestamp ID":1607118789249,"Match #":"2","Side":"BLUE","Name":"uva","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
 set(1607118789250, {"Timestamp ID":1607118789250,"Match #":"3","Side":"BLUE","Name":"rpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
-set(1607118789251, {"Timestamp ID":1607118789251,"Match #":"4","Side":"BLUE","Name":"vcat","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
+set(1607118789251, {"Timestamp ID":1607118789251,"Match #":"4","Side":"BLUE","Name":"vcat","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});*/
 updateButtons();
-
-const fileSelector = document.getElementById('cameraInput');
-  fileSelector.addEventListener('change', (event) => {
-    const fileList = event.target.files;
-	document.getElementById("fileListP").innerHTML = Array.from(fileList).map(x => x.name);
-  });
 
 //all buttons have changeVal class, increment and decrement classes, unique IDs
 	function changeVal(element) {
@@ -211,13 +234,11 @@ const fileSelector = document.getElementById('cameraInput');
 					sendInfo(val, true);
 					matches.push(JSON.stringify(val));
 					console.log(JSON.stringify(val));
-					QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
 				});
 			}
 			alert("All matches have been uploaded. Clearing local cache.");
 			//need to fix mobile css
-			let c = document.getElementById('canvas');
-			c.style.display = "block";//'{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}'
+			//'{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}'
 			clear();
 			updateButtons();
 		});
@@ -233,10 +254,12 @@ const fileSelector = document.getElementById('cameraInput');
 					let btn = document.createElement("BUTTON");
 					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 					btn.onclick = () => {
+						console.log("Clicked " + val["Match #"]);
 						let c = document.getElementById('canvas');
 						QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
 						c.style.display = "block";
 					}
+					btn.className = "styledButton";
 					cache.appendChild(btn);
 				});
 			}
