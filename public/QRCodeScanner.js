@@ -146,12 +146,10 @@ class QRCodeScanner {
       self.video.srcObject = stream;
       self.video.onloadedmetadata = function(e) {
 		var qrWindow = document.getElementById("qrcode-scanner");
-	    qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
-		self.$root.hide();
-		self.$root.show();
         // Do something with the video here.
         self.video.play();
         self._snapshot(self.callback);
+		qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
       };
     }).catch(function(e) {
       if (self.debug === true) console.error(`[${self.constructor.name}] exception occurred on \`startWebcam()\`:`, e);
