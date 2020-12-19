@@ -145,6 +145,7 @@ class QRCodeScanner {
       self.stream = stream;
       self.video.srcObject = stream;
       self.video.onloadedmetadata = function(e) {
+		var qrWindow = document.getElementById("qrcode-scanner");
 	    qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
 		self.$root.hide();
 		self.$root.show();
