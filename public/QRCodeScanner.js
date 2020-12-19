@@ -145,7 +145,9 @@ class QRCodeScanner {
       self.stream = stream;
       self.video.srcObject = stream;
       self.video.onloadedmetadata = function(e) {
+		self.$root.hide();
 	    qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
+		self.$root.show();
         // Do something with the video here.
         self.video.play();
         self._snapshot(self.callback);
