@@ -1,26 +1,11 @@
 .jumbotron {
   background: #AC2B37;
-  color: white; }
-  .jumbotron .btn-primary {
-    background: #AC2B37;
-    border-color: #AC2B37; }
-    .jumbotron .btn-primary:hover {
-      background: #AC2B37; }
-  .jumbotron p {
-    color: white;
-    max-width: 75%;
-    margin: 1em auto 2em; }
-  .jumbotron .lang-logo {
-    display: block;
-    background: #AC2B37;
-    border-radius: 50%;
-    overflow: hidden;
-    width: 100px;
-    height: 100px;
-    margin: auto;
-    border: 2px solid white; }
-    .jumbotron .lang-logo img {
-      max-width: 100%; 
+  color: white; 
+  padding: 20px !important;
+}
+
+.pageTitle {
+	font-size: 50px !important;
 }
 
 .increment, .decrement {
