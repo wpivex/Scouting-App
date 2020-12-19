@@ -184,4 +184,8 @@ h1 {
 	#exit {
 		margin: 5px 20px 5px 0px; 
 	}
+	
+	.pageTitle {
+		font-size: 30px !important;
+	}
 }
