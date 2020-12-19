@@ -142,11 +142,11 @@ class QRCodeScanner {
 		  facingMode: "environment"
 	  }
     }).then(function(stream) {
-	  var qrWindow = document.getElementById("qrcode-scanner");
-	  qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
       self.stream = stream;
       self.video.srcObject = stream;
       self.video.onloadedmetadata = function(e) {
+		var qrWindow = document.getElementById("qrcode-scanner");
+	    qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
         // Do something with the video here.
         self.video.play();
         self._snapshot(self.callback);
