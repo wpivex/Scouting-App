@@ -148,8 +148,8 @@ class QRCodeScanner {
 		var qrWindow = document.getElementById("qrcode-scanner");
         // Do something with the video here.
         self.video.play();
-        self._snapshot(self.callback);
 		qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
+        self._snapshot(self.callback);
       };
     }).catch(function(e) {
       if (self.debug === true) console.error(`[${self.constructor.name}] exception occurred on \`startWebcam()\`:`, e);
