@@ -123,8 +123,10 @@
 	</div>
 	
 	<div id="qrWrapper" style="display:none;">
-		<h2 id="matchTitle"></h2>
-		<canvas id="canvas" width="100" height="100"></canvas>
+		<hr>
+		<span name="close" title="Close" onclick="closeQR()" style="cursor: pointer; font-weight: bold; float: right;">&times;</span>
+		<h2 id="matchTitle"></h2><br>
+		<canvas id="canvas" width="100" height="100"></canvas><br><br>
 		<button onclick="deleteCurrent()" class="styledButton" type="submit">Delete match</button>
 	</div>
 </div><br>
@@ -139,7 +141,7 @@ var currentMatch = null;
     qrcodeScanner.open((err, result) => {
 		console.log(err);
 		let val = JSON.parse(result.data);
-		console.log("QRCodeScanner result:", val);
+		console.log("QR Scanner result:", val);
 		set(val["Timestamp ID"], val).then(() =>
 		alert("Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '") stored in cache.'));
 		updateButtons();
@@ -190,10 +192,11 @@ updateButtons();
 		let c = document.getElementById('canvas');
 		document.getElementById("matchTitle").innerText = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 		QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
-		c.style.display = "block";
+		document.getElementById("qrWrapper").style.display = "block";
 	}
 	
 	function updateButtons() {
+		document.getElementById("qrWrapper").style.display = "none";
 		keys().then(matchKeys => {
 			let cache = document.getElementById("cacheButtons");
 			cache.innerHTML = "";
@@ -202,7 +205,6 @@ updateButtons();
 					let btn = document.createElement("BUTTON");
 					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 					btn.onclick = () => {
-						console.log("Clicked " + val["Match #"]);
 						updateQR(val);
 					}
 					btn.className = "styledButton";
@@ -210,6 +212,15 @@ updateButtons();
 				});
 			}
 		});
+	}
+	
+	function deleteCurrent() {
+		window.del(currentMatch);
+		updateButtons();
+	}
+	
+	function closeQR() {
+		document.getElementById("qrWrapper").style.display = "none";
 	}
 </script>
 
@@ -260,10 +271,11 @@ updateButtons();
 		let c = document.getElementById('canvas');
 		document.getElementById("matchTitle").innerText = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 		QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
-		c.style.display = "block";
+		document.getElementById("qrWrapper").style.display = "block";
 	}
 	
 	function updateButtons() {
+		document.getElementById("qrWrapper").style.display = "none";
 		keys().then(matchKeys => {
 			let cache = document.getElementById("cacheButtons");
 			cache.innerHTML = "";
@@ -273,7 +285,6 @@ updateButtons();
 					let btn = document.createElement("BUTTON");
 					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 					btn.onclick = () => {
-						console.log("Clicked " + val["Match #"]);
 						updateQR(val);
 					}
 					btn.className = "styledButton";
@@ -300,12 +311,17 @@ updateButtons();
 		// callback handler that will be called on failure
 		request.fail(function (jqXHR, textStatus, errorThrown){
 			// log the error to the console
-			set(data["Timestamp ID"], data).then(() =>
-			alert("Either there's no internet or something went wrong, match stored locally. You can upload stored matches with the Send cached data button."));
+			set(data["Timestamp ID"], data).then(() => {
+				alert("Either there's no internet or something went wrong, match stored locally. You can upload stored matches with the Send cached data button.");
+				updateButtons();
+			});
 		});
 		request.done(function (response, textStatus, jqXHR){
 			// Log a message to the console
-			if(!cached) {alert("Success!");}
+			if(!cached) {
+				alert("Success!");
+				updateButtons();
+			}
 		});
 		// prevent default posting of form
 		event.preventDefault();
