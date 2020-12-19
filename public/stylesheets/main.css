@@ -54,7 +54,7 @@
 .toggle {
 	height: auto;
 	padding: 18px;
-	margin: 10px;
+	margin: auto;
 	color: white;
 	border-style: outset;
 	border-width: 5px;
@@ -142,10 +142,6 @@ h1 {
 	margin: 0px; 
 	margin-right: 25px;
 	font-size: 20px;
-}
-
-label {
-	margin-left: 10px;
 }
 
 @media only screen and (max-device-width: 480px) {
