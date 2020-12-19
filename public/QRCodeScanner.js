@@ -128,6 +128,7 @@ class QRCodeScanner {
     self.$root.show();
 	let qrWindow = document.getElementById("qrcode-scanner");
 	qrWindow.style.left = "calc(50% - " + (qrWindow.clientWidth / 2) + "px)";
+	qrWindow.style.top = "calc(50% - " + (qrWindow.clientHeight / 2) + "px)";
   }
 
   /** open the webcam pane and start to scan */
