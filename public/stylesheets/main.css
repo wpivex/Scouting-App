@@ -156,7 +156,7 @@ h1 {
 	float: right; 
 	margin: 0px; 
 	margin-right: 25px;
-	font-size: 18px;
+	font-size: 20px;
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -197,7 +197,6 @@ h1 {
 	}
 	
 	#exit {
-		margin: 15px; 
-		margin-bottom: 0px;
+		margin: 5px 20px 0px 0px; 
 	}
 }
