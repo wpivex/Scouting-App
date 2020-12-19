@@ -151,6 +151,14 @@ h1 {
 	width: 100%;
 }
 
+#exit {
+	cursor: pointer; 
+	font-weight: bold; 
+	float: right; 
+	margin: 0px; 
+	font-size: 18px;
+}
+
 @media only screen and (max-device-width: 480px) {
 	input[type=range] {
 		width: 90%;
@@ -186,5 +194,10 @@ h1 {
 		left:0;
 		width: 100%;
 		height: 100%;
+	}
+	
+	#exit {
+		margin: 15px; 
+		margin-bottom: 0px;
 	}
 }
