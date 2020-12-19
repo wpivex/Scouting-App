@@ -101,8 +101,8 @@
 		<label for="fname"> Defense: </label><br>
 		<br><br>
 	</div><br><br><br>
-	<button onclick="sendCurrent()" class="styledButton" type="submit" value="SendCurrent">Send current match</button>
-	<button onclick="sendCached()" class="styledButton" type="submit" value="SendCached">Send cached matches</button>
+	<button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
+	<button onclick="sendCached()" class="styledButton" type="submit">Send cached matches</button>
 	<button id="btn-open-qrcode-scanner" class="styledButton">Upload a QR Code</button><br><br>
 	<p id="fileListP"></p><br><br>
 	<h1>Cached Matches</h1><br><br>
@@ -121,17 +121,23 @@
 		  <button name="close" style="width: 100%;">&times; Close</button>
 		</div>
 	</div>
-  
-	<canvas id="canvas" width="100" height="100" style="display:none;"></canvas>
+	
+	<div id="qrWrapper" style="display:none;">
+		<h2 id="matchTitle"></h2>
+		<canvas id="canvas" width="100" height="100"></canvas>
+		<button onclick="deleteCurrent()" class="styledButton" type="submit">Delete match</button>
+	</div>
 </div><br>
 
 <script>
 // create QRCodeScanner instance
-window.qrcodeScanner = new QRCodeScanner({ rootSelector: "#qrcode-scanner" });
+var currentMatch = null;
 
   $(document).on("click", "#btn-open-qrcode-scanner", function(e) {
+    window.qrcodeScanner = new QRCodeScanner({ rootSelector: "#qrcode-scanner" });
     // open QRCodeScanner webcam scanner
     qrcodeScanner.open((err, result) => {
+		console.log(err);
 		let val = JSON.parse(result.data);
 		console.log("QRCodeScanner result:", val);
 		set(val["Timestamp ID"], val).then(() =>
@@ -179,20 +185,25 @@ updateButtons();
 		}
 	}
 	
+	function updateQR(val) {
+		currentMatch = val["Timestamp ID"];
+		let c = document.getElementById('canvas');
+		document.getElementById("matchTitle").innerText = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
+		QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
+		c.style.display = "block";
+	}
+	
 	function updateButtons() {
 		keys().then(matchKeys => {
 			let cache = document.getElementById("cacheButtons");
 			cache.innerHTML = "";
 			for(key in matchKeys) {
-				let tempKey = JSON.parse(JSON.stringify(matchKeys[key]));
 				get(matchKeys[key]).then(val => {
 					let btn = document.createElement("BUTTON");
 					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 					btn.onclick = () => {
 						console.log("Clicked " + val["Match #"]);
-						let c = document.getElementById('canvas');
-						QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
-						c.style.display = "block";
+						updateQR(val);
 					}
 					btn.className = "styledButton";
 					cache.appendChild(btn);
@@ -244,6 +255,14 @@ updateButtons();
 		});
 	}
 	
+	function updateQR(val) {
+		currentMatch = val["Timestamp ID"];
+		let c = document.getElementById('canvas');
+		document.getElementById("matchTitle").innerText = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
+		QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
+		c.style.display = "block";
+	}
+	
 	function updateButtons() {
 		keys().then(matchKeys => {
 			let cache = document.getElementById("cacheButtons");
@@ -255,9 +274,7 @@ updateButtons();
 					btn.innerHTML = "Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '")';
 					btn.onclick = () => {
 						console.log("Clicked " + val["Match #"]);
-						let c = document.getElementById('canvas');
-						QRCode.toCanvas(c, JSON.stringify(val), function (error) {if (error) console.error(error)});
-						c.style.display = "block";
+						updateQR(val);
 					}
 					btn.className = "styledButton";
 					cache.appendChild(btn);

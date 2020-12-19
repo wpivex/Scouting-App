@@ -138,7 +138,7 @@ class QRCodeScanner {
     navigator.mediaDevices.getUserMedia({
       audio: false,
       video: {
-		  facingMode: { exact: "environment" }
+		  facingMode: "environment"
 	  }
     }).then(function(stream) {
       self.stream = stream;
