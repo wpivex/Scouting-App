@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<% include ../partials/header.ejs %>
 </head>
@@ -10,17 +10,14 @@
 <script src="QRCodeScanner.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.1.1/dist/jsQR.min.js"></script>
 
 <script type="module">
 	import 'https://cdn.jsdelivr.net/npm/@pwabuilder/pwaupdate';
 	const el = document.createElement('pwa-update');
 	document.body.appendChild(el);
 </script>
-<meta 
-		 name='viewport' 
-		 content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' 
-/>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
 	
 <div class="jumbotron text-center">
 	<div class="container">
@@ -30,39 +27,39 @@
 <div class="container" style="text-align: center">
 	<button type="button" class="collapsible">General</button>
 	<div class="content"><br>
-		<label for="fname">Match number: </label><br>
+		<label for="match">Match number: </label><br>
 		<input type="number" id="match" name="match"><br><br>
 		<div class="sideToggle toggle" id="side" style="background-color: #AC2B37; border-color: #cc3342;">Red</div><br>
-		<label for="fname">Team name: </label><br>
+		<label for="name">Team name: </label><br>
 		<input type="text" id="name" name="name"><br><br>
 		<div class="robotToggle toggle" id="robot" style="background-color: #FFC300; border-color: #FFC300;">15 inch</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Autonomous Scoring</button>
 	<div class="content"><br>
-		<label for="fname">Balls scored: </label><br>
+		<label for="ballsAuto">Balls scored: </label><br>
 		<input type="number" id="ballsAuto" name="ballsAuto" value=0>
 		<button onclick="changeVal(this)" class="ba increment">+</button>
 		<button onclick="changeVal(this)" class="ba decrement">-</button><br><br>
-		<label for="fname">Goals scored: </label><br>
+		<label for="goalsAuto">Goals scored: </label><br>
 		<input type="number" id="goalsAuto" name="goalsAuto" value=0>
 		<button onclick="changeVal(this)" class="ga increment">+</button>
 		<button onclick="changeVal(this)" class="ga decrement">-</button><br><br>
-		<label for="fname">Rows scored: </label><br>
+		<label for="rowsAuto">Rows scored: </label><br>
 		<input type="number" id="rowsAuto" name="rowsAuto" value=0>
 		<button onclick="changeVal(this)" class="ra increment">+</button>
 		<button onclick="changeVal(this)" class="ra decrement">-</button><br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Teleoperated Scoring</button>
 	<div class="content"><br>
-		<label for="fname">Balls scored: </label><br>
+		<label for="ballsTeleop">Balls scored: </label><br>
 		<input type="number" id="ballsTeleop" name="ballsTeleop" value=0>
 		<button onclick="changeVal(this)" class="bt increment">+</button>
 		<button onclick="changeVal(this)" class="bt decrement">-</button><br><br>
-		<label for="fname">Goals scored: </label><br>
+		<label for="goalsTeleop">Goals scored: </label><br>
 		<input type="number" id="goalsTeleop" name="goalsTeleop" value=0>
 		<button onclick="changeVal(this)" class="gt increment">+</button>
 		<button onclick="changeVal(this)" class="gt decrement">-</button><br><br>
-		<label for="fname">Rows scored: </label><br>
+		<label for="rowsTeleop">Rows scored: </label><br>
 		<input type="number" id="rowsTeleop" name="rowsTeleop" value=0>
 		<button onclick="changeVal(this)" class="rt increment">+</button>
 		<button onclick="changeVal(this)" class="rt decrement">-</button><br><br>
@@ -70,35 +67,35 @@
 	</div><br><br>
 	<button type="button" class="collapsible">Strategy</button>
 	<div class="content"><br>
-		<label for="fname">Fast drive:  </label>
+		<label for="fastDrive">Fast drive:  </label>
 		<input type="checkbox" id="fastDrive" name="fastDrive" value="1"><br><br>
-		<label for="fname">Mobility: </label><br>
+		<label for="mobility">Mobility: </label><br>
 		<input type="range" min="0" max="10" id="mobility" name="mobility" list="steplist">
 		<datalist id="steplist" style="--list-length: 11;"><!--
-		  ---><option>0</option><!--
-		  ---><option>1</option><!--
-		  ---><option>2</option><!--
-		  ---><option>3</option><!--
-		  ---><option>4</option><!--
-		  ---><option>5</option><!--
-		  ---><option>6</option><!--
-		  ---><option>7</option><!--
-		  ---><option>8</option><!--
-		  ---><option>9</option><!--
-		  ---><option>10</option><!--
-		---></datalist><br><br>
-		<label for="fname">Driver comments: </label><br>
+		  --><option>0</option><!--
+		  --><option>1</option><!--
+		  --><option>2</option><!--
+		  --><option>3</option><!--
+		  --><option>4</option><!--
+		  --><option>5</option><!--
+		  --><option>6</option><!--
+		  --><option>7</option><!--
+		  --><option>8</option><!--
+		  --><option>9</option><!--
+		  --><option>10</option><!--
+		--></datalist><br><br>
+		<label for="comment">Driver comments: </label><br>
 		<textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br>
-		<label for="fname">General Strategy: </label><br>
+		<label for="genStrat">General Strategy: </label><br>
 		<select name="genStrat" id="genStrat">
 			<option value="Strategy 1">Strategy 1</option>
 			<option value="Strategy 2">Strategy 2</option>
 			<option value="Strategy 3">Strategy 3</option>
 		</select><br><br>
-		<label for="fname"> Offense: </label><br>
-		<br><br>
-		<label for="fname"> Defense: </label><br>
-		<br><br>
+		<!-- <label for="fname"> Offense: </label><br> -->
+		<!-- <br><br> -->
+		<!-- <label for="fname"> Defense: </label><br> -->
+		<!-- <br><br> -->
 	</div><br><br><br>
 	<button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
 	<button onclick="sendCached()" class="styledButton" type="submit">Send cached matches</button>
@@ -109,12 +106,12 @@
 	
 	<div id="qrcode-scanner" style="display: none; border: 1px solid gray;">
 		<div style="background-color: #ccc; padding: 6px;">
-		  <strong name="title">QR Code Scanner</strong>
-		  <span name="close" title="Close" style="cursor: pointer; font-weight: bold; float: right;">&times;</span>
+		  <strong>QR Code Scanner</strong>
+		  <span title="Close" style="cursor: pointer; font-weight: bold; float: right;">&times;</span>
 		</div>
-		<div name="pane-webcam" style="display: none;">
-		  <video name="video" autoplay></video>
-		  <canvas name="canvas" style="display: none;"></canvas>
+		<div style="display: none;">
+		  <video autoplay></video>
+		  <canvas style="display: none;"></canvas>
 		</div>
 		<div>
 		  <button name="close" style="width: 100%;">&times; Close</button>
@@ -123,7 +120,7 @@
 	
 	<div id="qrWrapper" style="display:none;">
 		<hr>
-		<span id="exit" name="close" title="Close" onclick="closeQR()">&times;</span><br>
+		<span id="exit" title="Close" onclick="closeQR()">&times;</span><br>
 		<h2 id="matchTitle"></h2><br>
 		<canvas id="canvas" width="100" height="100"></canvas><br><br>
 		<button onclick="deleteCurrent()" class="styledButton" type="submit">Delete match</button>
@@ -223,7 +220,7 @@ updateButtons();
 	}
 </script>
 
-<script data-cfasync="false" type="text/javascript">
+<script data-cfasync="false">
 	function sendCurrent() {
 		var date = new Date();
 		var matchData = {
