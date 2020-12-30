@@ -48,6 +48,12 @@
 		<input type="number" id="rowsAuto" name="rowsAuto" value=0>
 		<button onclick="changeVal(this)" class="ra increment">+</button>
 		<button onclick="changeVal(this)" class="ra decrement">-</button><br><br>
+		<label for="goal1">Goal 1:  </label>
+		<input type="checkbox" style="margin: 0px 15px 0px 0px;" id="goal1" name="goal1" value="1">
+		<label for="goal2">Goal 2:  </label>
+		<input type="checkbox" style="margin: 0px 15px 0px 0px;" id="goal2" name="goal2" value="1">
+		<label for="goal3">Goal 3:  </label>
+		<input type="checkbox" style="margin: 0px 15px 0px 0px;" id="goal3" name="goal3" value="1"><br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Teleoperated Scoring</button>
 	<div class="content"><br>
@@ -63,40 +69,44 @@
 		<input type="number" id="rowsTeleop" name="rowsTeleop" value=0>
 		<button onclick="changeVal(this)" class="rt increment">+</button>
 		<button onclick="changeVal(this)" class="rt decrement">-</button><br><br>
-		<div class="cycleToggle toggle" id="cycle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br>
+		<label for="goalsCycled">Goals cycled: </label><br>
+		<input type="number" id="goalsCycled" name="goalsCycled" value=0>
+		<button onclick="changeVal(this)" class="gc increment">+</button>
+		<button onclick="changeVal(this)" class="gc decrement">-</button><br><br>
+		<!-- <div class="cycleToggle toggle" id="cycle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br> -->
 	</div><br><br>
-	<button type="button" class="collapsible">Strategy</button>
-	<div class="content"><br>
-		<label for="fastDrive">Fast drive:  </label>
-		<input type="checkbox" id="fastDrive" name="fastDrive" value="1"><br><br>
-		<label for="mobility">Mobility: </label><br>
-		<input type="range" min="0" max="10" id="mobility" name="mobility" list="steplist">
-		<datalist id="steplist" style="--list-length: 11;"><!--
-		  --><option>0</option><!--
-		  --><option>1</option><!--
-		  --><option>2</option><!--
-		  --><option>3</option><!--
-		  --><option>4</option><!--
-		  --><option>5</option><!--
-		  --><option>6</option><!--
-		  --><option>7</option><!--
-		  --><option>8</option><!--
-		  --><option>9</option><!--
-		  --><option>10</option><!--
-		--></datalist><br><br>
-		<label for="comment">Driver comments: </label><br>
-		<textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br>
-		<label for="genStrat">General Strategy: </label><br>
-		<select name="genStrat" id="genStrat">
-			<option value="Strategy 1">Strategy 1</option>
-			<option value="Strategy 2">Strategy 2</option>
-			<option value="Strategy 3">Strategy 3</option>
-		</select><br><br>
-		<!-- <label for="fname"> Offense: </label><br> -->
-		<!-- <br><br> -->
-		<!-- <label for="fname"> Defense: </label><br> -->
-		<!-- <br><br> -->
-	</div><br><br><br>
+	<!-- <button type="button" class="collapsible">Strategy</button> -->
+	<!-- <div class="content"><br> -->
+		<!-- <label for="fastDrive">Fast drive:  </label> -->
+		<!-- <input type="checkbox" id="fastDrive" name="fastDrive" value="1"><br><br> -->
+		<!-- <label for="mobility">Mobility: </label><br> -->
+		<!-- <input type="range" min="0" max="10" id="mobility" name="mobility" list="steplist"> -->
+		<!-- <datalist id="steplist" style="--list-length: 11;"><!-- -->
+		  <!--<option>0</option>-->
+		  <!--<option>1</option>-->
+		  <!--<option>2</option>-->
+		  <!--<option>3</option>-->
+		  <!--<option>4</option>-->
+		  <!--<option>5</option>-->
+		  <!--<option>6</option>-->
+		  <!--<option>7</option>-->
+		  <!--<option>8</option>-->
+		  <!--<option>9</option>-->
+		  <!--<option>10</option>-->
+		<!--</datalist><br><br> -->
+		<!-- <label for="comment">Driver comments: </label><br> -->
+		<!-- <textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br> -->
+		<!-- <label for="genStrat">General Strategy: </label><br> -->
+		<!-- <select name="genStrat" id="genStrat"> -->
+			<!-- <option value="Strategy 1">Strategy 1</option> -->
+			<!-- <option value="Strategy 2">Strategy 2</option> -->
+			<!-- <option value="Strategy 3">Strategy 3</option> -->
+		<!-- </select><br><br> -->
+		<!-- <!-- <label for="fname"> Offense: </label><br> -->
+		<!-- <!-- <br><br> -->
+		<!-- <!-- <label for="fname"> Defense: </label><br> -->
+		<!-- <!-- <br><br> -->
+	<!-- </div><br><br><br> -->
 	<button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
 	<button onclick="sendCached()" class="styledButton" type="submit">Send cached matches</button>
 	<button id="btn-open-qrcode-scanner" class="styledButton">Upload a QR Code</button><br><br>
@@ -180,6 +190,8 @@ updateButtons();
 			document.getElementById("goalsTeleop").value = +document.getElementById("goalsTeleop").value + change;
 		} else if (element.classList.contains("rt")) {
 			document.getElementById("rowsTeleop").value = +document.getElementById("rowsTeleop").value + change;
+		} else if (element.classList.contains("gc")) {
+			document.getElementById("goalsCycled").value = +document.getElementById("goalsCycled").value + change;
 		}
 	}
 	
@@ -232,14 +244,18 @@ updateButtons();
 			"Balls Scored (Auto)": document.getElementById("ballsAuto").value, 
 			"Goals Scored (Auto)": document.getElementById("goalsAuto").value, 
 			"Rows Scored (Auto)": document.getElementById("rowsAuto").value, 
+			"Goal 1 (Auto)": document.getElementById("goal1").checked,
+			"Goal 2 (Auto)": document.getElementById("goal2").checked,
+			"Goal 3 (Auto)": document.getElementById("goal3").checked,
 			"Balls Scored (Teleop)": document.getElementById("ballsTeleop").value, 
 			"Goals Scored (Teleop)": document.getElementById("goalsTeleop").value, 
-			"Rows Scored (Teleop)": document.getElementById("rowsTeleop").value, 
-			"Cycle Speed": document.getElementById("cycle").style.backgroundColor =='rgb(0, 128, 0)' ? "HIGH" : "LOW", 
+			"Rows Scored (Teleop)": document.getElementById("rowsTeleop").value,
+			"Goals Cycled (Teleop)": document.getElementById("goalsCycled").value
+			/*"Cycle Speed": document.getElementById("cycle").style.backgroundColor =='rgb(0, 128, 0)' ? "HIGH" : "LOW", 
 			"Fast Drive?": document.getElementById("fastDrive").checked,	
 			"Mobility? (0-10)": document.getElementById("mobility").value, 
 			"Driver Comments": document.getElementById("comment").value, 
-			"General Strategy": document.getElementById("genStrat").value
+			"General Strategy": document.getElementById("genStrat").value*/
 		}
 		sendInfo(matchData, false);
 	}
