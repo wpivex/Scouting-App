@@ -28,7 +28,7 @@
 	<button type="button" class="collapsible">General</button>
 	<div class="content"><br>
 		<label for="match">Match number: </label><br>
-		<input type="number" id="match" name="match"><br><br>
+		<input type="text" id="match" name="match"><br><br>
 		<div class="sideToggle toggle" id="side" style="background-color: #AC2B37; border-color: #cc3342;">Red</div><br>
 		<label for="name">Team name: </label><br>
 		<input type="text" id="name" name="name"><br><br>
@@ -169,6 +169,7 @@ for (i = 0; i < coll.length; i++) {
 	});
 }
 
+//Testing data
 /*set(1607118789248, {"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
 set(1607118789249, {"Timestamp ID":1607118789249,"Match #":"2","Side":"BLUE","Name":"uva","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
 set(1607118789250, {"Timestamp ID":1607118789250,"Match #":"3","Side":"BLUE","Name":"rpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
@@ -251,6 +252,7 @@ updateButtons();
 			"Goals Scored (Teleop)": document.getElementById("goalsTeleop").value, 
 			"Rows Scored (Teleop)": document.getElementById("rowsTeleop").value,
 			"Goals Cycled (Teleop)": document.getElementById("goalsCycled").value
+			//Previously used fields
 			/*"Cycle Speed": document.getElementById("cycle").style.backgroundColor =='rgb(0, 128, 0)' ? "HIGH" : "LOW", 
 			"Fast Drive?": document.getElementById("fastDrive").checked,	
 			"Mobility? (0-10)": document.getElementById("mobility").value, 
