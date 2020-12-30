@@ -105,11 +105,11 @@ class QRCodeScanner {
     //
     // -- for webcam scanner:
     //
-    this.$paneWebcam = $root.find("[name=pane-webcam]");
-    this.canvas = $root.find("[name=canvas]")[0];
-    if (!this.canvas) throw Error(`canvas[name=canvas] in ${rootSelector} element not found`);
-    this.video = $root.find(`[name=video]`)[0];
-    if (!this.video) throw Error(`video[name=video] in ${rootSelector} element not found`);
+    this.$paneWebcam = $root.find("[id=pane-webcam]");
+    this.canvas = $root.find("[id=cameraCanvas]")[0];
+    if (!this.canvas) throw Error(`canvas[id=cameraCanvas] in ${rootSelector} element not found`);
+    this.video = $root.find(`video`)[0];
+    if (!this.video) throw Error(`video in ${rootSelector} element not found`);
     this.ctx = this.canvas.getContext('2d');
     if (!this.ctx) throw Error("Canvas 2d context not found");
     //
