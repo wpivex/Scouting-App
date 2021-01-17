@@ -32,7 +32,7 @@
 		<div class="sideToggle toggle" id="side" style="background-color: #AC2B37; border-color: #cc3342;">Red</div><br>
 		<label for="name">Team name: </label><br>
 		<input type="text" id="name" name="name"><br><br>
-		<div class="robotToggle toggle" id="robot" style="background-color: #FFC300; border-color: #FFC300;">15 inch</div><br>
+		<div class="robotToggle toggle" id="robot" style="background-color: #ff8000; border-color: #fea64c;">15 inch</div><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Autonomous</button>
 	<div class="content"><br>
@@ -332,13 +332,13 @@
    });
    
    $(".robotToggle").click(function() {
-		if ($(this).css('background-color')=="rgb(255, 195, 0)") {
-			$(this).css('background-color', '#ff8000');
-			$(this).css('border-color', '#ff8000');
+		if ($(this).css('background-color')=="rgb(255, 128, 0)") {
+			$(this).css('background-color', '#8B008B');
+			$(this).css('border-color', '#b000b0');
 			$(this).text("24 inch");
 		} else {
-			$(this).css('background-color', '#FFC300');
-			$(this).css('border-color', '#FFC300');
+			$(this).css('background-color', '#ff8000');
+			$(this).css('border-color', '#fea64c');
 			$(this).text("15 inch");
 		}
 	});
