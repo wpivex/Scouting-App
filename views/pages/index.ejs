@@ -48,12 +48,6 @@
 		<input type="number" id="rowsAuto" name="rowsAuto" value=0>
 		<button onclick="changeVal(this)" class="ra increment">+</button>
 		<button onclick="changeVal(this)" class="ra decrement">-</button><br><br>
-		<label for="goal1">Goal 1:  </label>
-		<input type="checkbox" style="margin: 0px 15px 0px 0px;" id="goal1" name="goal1" value="1">
-		<label for="goal2">Goal 2:  </label>
-		<input type="checkbox" style="margin: 0px 15px 0px 0px;" id="goal2" name="goal2" value="1">
-		<label for="goal3">Goal 3:  </label>
-		<input type="checkbox" style="margin: 0px 15px 0px 0px;" id="goal3" name="goal3" value="1"><br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Teleoperated Scoring</button>
 	<div class="content"><br>
@@ -138,45 +132,41 @@
 </div><br>
 
 <script>
-// create QRCodeScanner instance
-var currentMatch = null;
+	// create QRCodeScanner instance
+	var currentMatch = null;
 
-  $(document).on("click", "#btn-open-qrcode-scanner", function(e) {
-    window.qrcodeScanner = new QRCodeScanner({ rootSelector: "#qrcode-scanner" });
-    // open QRCodeScanner webcam scanner
-    qrcodeScanner.open((err, result) => {
-		console.log(err);
-		let val = JSON.parse(result.data);
-		console.log("QR Scanner result:", val);
-		set(val["Timestamp ID"], val).then(() =>
-		alert("Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '") stored in cache.'));
-		updateButtons();
-    });
-  });
+	  $(document).on("click", "#btn-open-qrcode-scanner", function(e) {
+		window.qrcodeScanner = new QRCodeScanner({ rootSelector: "#qrcode-scanner" });
+		// open QRCodeScanner webcam scanner
+		qrcodeScanner.open((err, result) => {
+			console.log(err);
+			let val = JSON.parse(result.data);
+			console.log("QR Scanner result:", val);
+			set(val["Timestamp ID"], val).then(() =>
+			alert("Match " + val["Match #"] + " - " + val["Name"].toUpperCase() + " (" + val["Robot"] + '") stored in cache.'));
+			updateButtons();
+		});
+	  });
 
-var coll = document.getElementsByClassName("collapsible");
-var i;
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
 
-for (i = 0; i < coll.length; i++) {
-	coll[i].addEventListener("click", function() {
-		this.classList.toggle("active");
-		var content = this.nextElementSibling;
-		if (content.style.display === "block") {
-			content.style.display = "none";
-		} else {
-			content.style.display = "block";
-		}
-	});
-}
+	for (i = 0; i < coll.length; i++) {
+		coll[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var content = this.nextElementSibling;
+			if (content.style.display === "block") {
+				content.style.display = "none";
+			} else {
+				content.style.display = "block";
+			}
+		});
+	}
 
-//Testing data
-/*set(1607118789248, {"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
-set(1607118789249, {"Timestamp ID":1607118789249,"Match #":"2","Side":"BLUE","Name":"uva","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
-set(1607118789250, {"Timestamp ID":1607118789250,"Match #":"3","Side":"BLUE","Name":"rpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});
-set(1607118789251, {"Timestamp ID":1607118789251,"Match #":"4","Side":"BLUE","Name":"vcat","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"});*/
-updateButtons();
 
-//all buttons have changeVal class, increment and decrement classes, unique IDs
+	updateButtons();
+
+	//all buttons have changeVal class, increment and decrement classes, unique IDs
 	function changeVal(element) {
 		var change = (element.classList.contains("increment")) ? 1 : -1;
 		if (element.classList.contains("ba")) {
@@ -245,9 +235,6 @@ updateButtons();
 			"Balls Scored (Auto)": document.getElementById("ballsAuto").value, 
 			"Goals Scored (Auto)": document.getElementById("goalsAuto").value, 
 			"Rows Scored (Auto)": document.getElementById("rowsAuto").value, 
-			"Goal 1 (Auto)": document.getElementById("goal1").checked,
-			"Goal 2 (Auto)": document.getElementById("goal2").checked,
-			"Goal 3 (Auto)": document.getElementById("goal3").checked,
 			"Balls Scored (Teleop)": document.getElementById("ballsTeleop").value, 
 			"Goals Scored (Teleop)": document.getElementById("goalsTeleop").value, 
 			"Rows Scored (Teleop)": document.getElementById("rowsTeleop").value,
@@ -260,6 +247,7 @@ updateButtons();
 			"General Strategy": document.getElementById("genStrat").value*/
 		}
 		sendInfo(matchData, false);
+		clearForm();
 	}
 	
 	function sendCached() {
@@ -273,11 +261,21 @@ updateButtons();
 				});
 			}
 			alert("All matches have been uploaded. Clearing local cache.");
-			//need to fix mobile css
-			//'{"Timestamp ID":1607118789248,"Match #":"1","Side":"BLUE","Name":"wpi","Robot":24,"Balls Scored (Auto)":"1","Goals Scored (Auto)":"1","Rows Scored (Auto)":"0","Balls Scored (Teleop)":"-2","Goals Scored (Teleop)":"-1","Rows Scored (Teleop)":"1","Cycle Speed":"HIGH","Fast Drive?":true,"Mobility? (0-10)":"8","Driver Comments":"lkjkdsflkjcxlkjlkcmxkjnkjhclkmlkxjd","General Strategy":"Strategy 1"}'
 			clear();
 			updateButtons();
 		});
+	}
+	
+	function clearForm() {
+		document.getElementById('match').value = "";
+		document.getElementById('name').value = "";
+		document.getElementById('ballsAuto').value = 0;
+		document.getElementById('goalsAuto').value = 0;
+		document.getElementById('rowsAuto').value = 0;
+		document.getElementById('ballsTeleop').value = 0;
+		document.getElementById('goalsTeleop').value = 0;
+		document.getElementById('rowsTeleop').value = 0;
+		document.getElementById('goalsCycled').value = 0;
 	}
 	
 	function updateQR(val) {
