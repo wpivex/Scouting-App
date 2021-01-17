@@ -34,7 +34,7 @@
 		<input type="text" id="name" name="name"><br><br>
 		<div class="robotToggle toggle" id="robot" style="background-color: #FFC300; border-color: #FFC300;">15 inch</div><br>
 	</div><br><br>
-	<button type="button" class="collapsible">Autonomous Scoring</button>
+	<button type="button" class="collapsible">Autonomous</button>
 	<div class="content"><br>
 		<label for="ballsAuto">Balls scored: </label><br>
 		<input type="number" id="ballsAuto" name="ballsAuto" value=0>
@@ -49,7 +49,7 @@
 		<button onclick="changeVal(this)" class="ra increment">+</button>
 		<button onclick="changeVal(this)" class="ra decrement">-</button><br><br>
 	</div><br><br>
-	<button type="button" class="collapsible">Teleoperated Scoring</button>
+	<button type="button" class="collapsible">Teleoperated</button>
 	<div class="content"><br>
 		<label for="ballsTeleop">Balls scored: </label><br>
 		<input type="number" id="ballsTeleop" name="ballsTeleop" value=0>
@@ -69,8 +69,8 @@
 		<button onclick="changeVal(this)" class="gc decrement">-</button><br><br>
 		<!-- <div class="cycleToggle toggle" id="cycle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br> -->
 	</div><br><br>
-	<!-- <button type="button" class="collapsible">Strategy</button> -->
-	<!-- <div class="content"><br> -->
+	<button type="button" class="collapsible">Final Field State</button>
+	<div class="content"><br>
 		<!-- <label for="fastDrive">Fast drive:  </label> -->
 		<!-- <input type="checkbox" id="fastDrive" name="fastDrive" value="1"><br><br> -->
 		<!-- <label for="mobility">Mobility: </label><br> -->
@@ -100,7 +100,7 @@
 		<!-- <!-- <br><br> -->
 		<!-- <!-- <label for="fname"> Defense: </label><br> -->
 		<!-- <!-- <br><br> -->
-	<!-- </div><br><br><br> -->
+	</div><br><br><br>
 	<button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
 	<button onclick="sendCached()" class="styledButton" type="submit">Send cached matches</button>
 	<button id="btn-open-qrcode-scanner" class="styledButton">Upload a QR Code</button><br><br>
@@ -111,7 +111,6 @@
 	<div id="qrcode-scanner" style="display: none; border: 1px solid gray;">
 		<div style="background-color: #ccc; padding: 6px;">
 		  <strong>QR Code Scanner</strong>
-		  <span title="Close" style="cursor: pointer; font-weight: bold; float: right;">&times;</span>
 		</div>
 		<div id="pane-webcam" style="display: none;">
 		  <video autoplay></video>
