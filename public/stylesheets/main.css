@@ -10,14 +10,34 @@
 
 .increment, .decrement {
 	border: none;
+	font-size: 30px;
 	border-radius: 5px;
     background-color: #777;
-    padding: 5px;
+    padding: 0px 0px 5px 0px;
     cursor: pointer;
 	margin: 10px;
-	width: 25px;
+	width: 50px;
 	color: white;
 	outline: none;
+}
+
+.ballInput {
+	vertical-align: top;
+	width: 60px;
+	height: 48px;
+	padding: 0;
+	margin: 10px;
+	text-align: center;
+	-webkit-appearance: none;
+    border: none;
+    background-color: inherit;
+    font-size: 50px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .decrement {

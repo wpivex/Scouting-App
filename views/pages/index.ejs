@@ -37,37 +37,30 @@
 	<button type="button" class="collapsible">Autonomous</button>
 	<div class="content"><br>
 		<label for="ballsAuto">Balls scored: </label><br>
-		<input type="number" id="ballsAuto" name="ballsAuto" value=0>
+		<input class="ballInput" type="number" id="ballsAuto" name="ballsAuto" value=0>
 		<button onclick="changeVal(this)" class="ba increment">+</button>
 		<button onclick="changeVal(this)" class="ba decrement">-</button><br><br>
 		<label for="goalsAuto">Goals scored: </label><br>
-		<input type="number" id="goalsAuto" name="goalsAuto" value=0>
+		<input class="ballInput" type="number" id="goalsAuto" name="goalsAuto" value=0>
 		<button onclick="changeVal(this)" class="ga increment">+</button>
 		<button onclick="changeVal(this)" class="ga decrement">-</button><br><br>
 		<label for="rowsAuto">Rows scored: </label><br>
-		<input type="number" id="rowsAuto" name="rowsAuto" value=0>
+		<input class="ballInput" type="number" id="rowsAuto" name="rowsAuto" value=0>
 		<button onclick="changeVal(this)" class="ra increment">+</button>
 		<button onclick="changeVal(this)" class="ra decrement">-</button><br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Teleoperated</button>
 	<div class="content"><br>
 		<label for="ballsTeleop">Balls scored: </label><br>
-		<input type="number" id="ballsTeleop" name="ballsTeleop" value=0>
+		<input class="ballInput" type="number" id="ballsTeleop" name="ballsTeleop" value=0>
 		<button onclick="changeVal(this)" class="bt increment">+</button>
 		<button onclick="changeVal(this)" class="bt decrement">-</button><br><br>
-		<label for="goalsTeleop">Goals scored: </label><br>
-		<input type="number" id="goalsTeleop" name="goalsTeleop" value=0>
-		<button onclick="changeVal(this)" class="gt increment">+</button>
-		<button onclick="changeVal(this)" class="gt decrement">-</button><br><br>
-		<label for="rowsTeleop">Rows scored: </label><br>
-		<input type="number" id="rowsTeleop" name="rowsTeleop" value=0>
-		<button onclick="changeVal(this)" class="rt increment">+</button>
-		<button onclick="changeVal(this)" class="rt decrement">-</button><br><br>
-		<label for="goalsCycled">Goals cycled: </label><br>
-		<input type="number" id="goalsCycled" name="goalsCycled" value=0>
-		<button onclick="changeVal(this)" class="gc increment">+</button>
-		<button onclick="changeVal(this)" class="gc decrement">-</button><br><br>
-		<!-- <div class="cycleToggle toggle" id="cycle" style="background-color: #FF0000; border-color: #ff3333;">Low cycle speed</div><br> -->
+		<label for="descoredTeleop">Balls descored: </label><br>
+		<input class="ballInput" type="number" id="descoredTeleop" name="descoredTeleop" value=0>
+		<button onclick="changeVal(this)" class="dt increment">+</button>
+		<button onclick="changeVal(this)" class="dt decrement">-</button><br><br>
+		<label for="comment">Comments: </label><br>
+		<textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Final Field State</button>
 	<div class="content"><br>
@@ -88,18 +81,12 @@
 		  <!--<option>9</option>-->
 		  <!--<option>10</option>-->
 		<!--</datalist><br><br> -->
-		<!-- <label for="comment">Driver comments: </label><br> -->
-		<!-- <textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br> -->
 		<!-- <label for="genStrat">General Strategy: </label><br> -->
 		<!-- <select name="genStrat" id="genStrat"> -->
 			<!-- <option value="Strategy 1">Strategy 1</option> -->
 			<!-- <option value="Strategy 2">Strategy 2</option> -->
 			<!-- <option value="Strategy 3">Strategy 3</option> -->
 		<!-- </select><br><br> -->
-		<!-- <!-- <label for="fname"> Offense: </label><br> -->
-		<!-- <!-- <br><br> -->
-		<!-- <!-- <label for="fname"> Defense: </label><br> -->
-		<!-- <!-- <br><br> -->
 	</div><br><br><br>
 	<button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
 	<button onclick="sendCached()" class="styledButton" type="submit">Send cached matches</button>
@@ -176,12 +163,8 @@
 			document.getElementById("rowsAuto").value = +document.getElementById("rowsAuto").value + change;
 		} else if (element.classList.contains("bt")) {
 			document.getElementById("ballsTeleop").value = +document.getElementById("ballsTeleop").value + change;
-		} else if (element.classList.contains("gt")) {
-			document.getElementById("goalsTeleop").value = +document.getElementById("goalsTeleop").value + change;
-		} else if (element.classList.contains("rt")) {
-			document.getElementById("rowsTeleop").value = +document.getElementById("rowsTeleop").value + change;
-		} else if (element.classList.contains("gc")) {
-			document.getElementById("goalsCycled").value = +document.getElementById("goalsCycled").value + change;
+		} else if (element.classList.contains("dt")) {
+			document.getElementById("descoredTeleop").value = +document.getElementById("descoredTeleop").value + change;
 		}
 	}
 	
@@ -235,9 +218,8 @@
 			"Goals Scored (Auto)": document.getElementById("goalsAuto").value, 
 			"Rows Scored (Auto)": document.getElementById("rowsAuto").value, 
 			"Balls Scored (Teleop)": document.getElementById("ballsTeleop").value, 
-			"Goals Scored (Teleop)": document.getElementById("goalsTeleop").value, 
-			"Rows Scored (Teleop)": document.getElementById("rowsTeleop").value,
-			"Goals Cycled (Teleop)": document.getElementById("goalsCycled").value
+			"Balls Descored (Teleop)": document.getElementById("descoredTeleop").value,
+			"Comments": document.getElementById("comment").value
 			//Previously used fields
 			/*"Cycle Speed": document.getElementById("cycle").style.backgroundColor =='rgb(0, 128, 0)' ? "HIGH" : "LOW", 
 			"Fast Drive?": document.getElementById("fastDrive").checked,	
@@ -268,13 +250,12 @@
 	function clearForm() {
 		document.getElementById('match').value = "";
 		document.getElementById('name').value = "";
+		document.getElementById('comment').value = "";
 		document.getElementById('ballsAuto').value = 0;
 		document.getElementById('goalsAuto').value = 0;
 		document.getElementById('rowsAuto').value = 0;
 		document.getElementById('ballsTeleop').value = 0;
-		document.getElementById('goalsTeleop').value = 0;
-		document.getElementById('rowsTeleop').value = 0;
-		document.getElementById('goalsCycled').value = 0;
+		document.getElementById('descoredTeleop').value = 0;
 	}
 	
 	function updateQR(val) {
