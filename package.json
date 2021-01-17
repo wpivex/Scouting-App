@@ -11,6 +11,7 @@
     "test": "node test.js"
   },
   "dependencies": {
+    "bl": "^4.0.3",
     "browserify-fs": "^1.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
@@ -32,9 +33,9 @@
     "url": "https://github.com/wpivex/Scouting-App"
   },
   "keywords": [
-    "vexu", 
-	"scouting", 
-	"wpi"
+    "vexu",
+    "scouting",
+    "wpi"
   ],
   "license": "MIT"
 }
