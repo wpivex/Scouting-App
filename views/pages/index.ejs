@@ -151,20 +151,52 @@
 	let ctx = canvas.getContext('2d');
 	var elements = [];
 	ctx.fillStyle = "#f1f1f1";
-	ctx.fillRect(0,0,canvas.width,canvas.height);
-	ctx.strokeStyle = "black";
-	ctx.lineWidth = 10;
+	ctx.fillRect(0,0,canvas.width,canvas.height);	
 	let colorGuide = ["#f1f1f1", "red", "blue"]
 	window.colors =	[[0, 0, 0], 
 					[0, 0, 0], 
 					[0, 0, 0]]
 	let start = [[50, 50], [50, 150], [50, 250], [50, 50], [150, 50], [250, 50], [50, 50], [250, 50]];
 	let end = [[250, 50], [250, 150], [250, 250], [50, 250], [150, 250], [250, 250], [250, 250], [50, 250]];
+	var lineColors = [0, 0, 0, 0, 0, 0, 0, 0];
 	drawEndState();
 	
+	function toIndex(n) {
+		return (n - 50) / 100;
+	}
+	
+	function updateLineColors() {
+		for(i=0; i<8; i++) {
+			let xUnit = (toIndex(end[i][0]) - toIndex(start[i][0])) / 2;
+			let yUnit = (toIndex(end[i][1]) - toIndex(start[i][1])) / 2;
+			let matchColor = null;
+			let solidLine = true;
+			for(j=0; j<3; j++) {
+				let currentColor = colors[toIndex(start[i][1]) + yUnit * j][toIndex(start[i][0]) + xUnit * j];
+				if(matchColor == null) {
+					matchColor = currentColor;
+				} else if (matchColor != currentColor) {
+					solidLine = false;
+				}
+			}
+			if(solidLine && matchColor != 0) {
+				lineColors[i] = colors[toIndex(start[i][1])][toIndex(start[i][0])];
+			} else {
+				lineColors[i] = 0;
+			}
+		}
+	}
+	
 	function drawEndState() {
+		updateLineColors();
 		elements = [];
+		ctx.lineWidth = 10;
 		for (i = 0; i < 8; i++) {
+			if(lineColors[i] == 0) {
+				ctx.strokeStyle = "black";
+			} else {
+				ctx.strokeStyle = colorGuide[lineColors[i]];
+			}
 			ctx.beginPath();
 			ctx.moveTo(start[i][0], start[i][1]);
 			ctx.lineTo(end[i][0], end[i][1]);
