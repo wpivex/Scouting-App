@@ -61,11 +61,12 @@
 		<button onclick="changeVal(this)" class="dt decrement">-</button><br><br>
 		<label for="comment">Comments: </label><br>
 		<textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br>
+		<label for="percentScored">Out of the balls scored for the team, about what percent were scored by this robot?</label><br>
+		0% <input type="range" min="0" max="100" id="percentScored" name="percentScored"> 100%<br><br>
 	</div><br><br>
 	<button type="button" class="collapsible">Final Field State</button>
 	<div class="content"><br>
-		<!-- <label for="fastDrive">Fast drive:  </label> -->
-		<!-- <input type="checkbox" id="fastDrive" name="fastDrive" value="1"><br><br> -->
+		<canvas width="300px" height="300px;" id="endState"></canvas><br><br>
 		<!-- <label for="mobility">Mobility: </label><br> -->
 		<!-- <input type="range" min="0" max="10" id="mobility" name="mobility" list="steplist"> -->
 		<!-- <datalist id="steplist" style="--list-length: 11;"><!-- -->
@@ -81,12 +82,6 @@
 		  <!--<option>9</option>-->
 		  <!--<option>10</option>-->
 		<!--</datalist><br><br> -->
-		<!-- <label for="genStrat">General Strategy: </label><br> -->
-		<!-- <select name="genStrat" id="genStrat"> -->
-			<!-- <option value="Strategy 1">Strategy 1</option> -->
-			<!-- <option value="Strategy 2">Strategy 2</option> -->
-			<!-- <option value="Strategy 3">Strategy 3</option> -->
-		<!-- </select><br><br> -->
 	</div><br><br><br>
 	<button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
 	<button onclick="sendCached()" class="styledButton" type="submit">Send cached matches</button>
@@ -151,7 +146,100 @@
 
 
 	updateButtons();
-
+	
+	let canvas = document.getElementById("endState");
+	let ctx = canvas.getContext('2d');
+	var elements = [];
+	ctx.fillStyle = "#f1f1f1";
+	ctx.fillRect(0,0,canvas.width,canvas.height);
+	ctx.strokeStyle = "black";
+	ctx.lineWidth = 10;
+	let colorGuide = ["#f1f1f1", "red", "blue"]
+	let colors =	[[0, 0, 0], 
+					[0, 0, 0], 
+					[0, 0, 0]]
+	let start = [[50, 50], [50, 150], [50, 250], [50, 50], [150, 50], [250, 50], [50, 50], [250, 50]];
+	let end = [[250, 50], [250, 150], [250, 250], [50, 250], [150, 250], [250, 250], [250, 250], [50, 250]];
+	drawEndState();
+	
+	function drawEndState() {
+		elements = [];
+		for (i = 0; i < 8; i++) {
+			ctx.beginPath();
+			ctx.moveTo(start[i][0], start[i][1]);
+			ctx.lineTo(end[i][0], end[i][1]);
+			ctx.stroke();
+		}
+		ctx.lineWidth = 5;
+		ctx.strokeStyle = "black";
+		for (i = 0; i < 3; i++) {
+			for (j = 0; j < 3; j++) {
+				let ic = i;
+				let jc = j;
+				ctx.fillStyle = colorGuide[colors[j][i]];
+				ctx.beginPath();
+				let xpos = 50+(100*i);
+				let ypos = 50+(100*j);
+				ctx.arc(xpos, ypos, 20, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.beginPath();
+				ctx.arc(xpos, ypos, 20, 0, 2 * Math.PI);
+				ctx.stroke();
+				elements.push({
+					circleSize: 20,
+					x: JSON.parse(JSON.stringify(xpos)),
+					y: JSON.parse(JSON.stringify(ypos)),
+					clicked: function() {
+						if(colors[JSON.parse(JSON.stringify(jc))][JSON.parse(JSON.stringify(ic))] == 2) {
+							colors[JSON.parse(JSON.stringify(jc))][JSON.parse(JSON.stringify(ic))] = 0;
+						} else {
+							colors[JSON.parse(JSON.stringify(jc))][JSON.parse(JSON.stringify(ic))]++;
+						}
+					}
+				});
+			}
+		}
+	}
+			
+	// Get mouse position
+	function getMousePos(c, evt) {
+		var rect = c.getBoundingClientRect();
+		return {
+			x: evt.clientX - rect.left,
+			y: evt.clientY - rect.top
+		};
+	};
+	
+	
+	canvas.addEventListener('click', function(e) {
+		var x = e.pageX - canvas.offsetLeft;
+		var y = e.pageY - canvas.offsetTop;
+		
+		elements.forEach(function(element){
+			if(Math.pow(x-element.x,2) + Math.pow(y-element.y,2) < Math.pow(element.circleSize,2)) {
+			   element.clicked(); 
+			   drawEndState();
+			}
+		});
+	});
+	
+	canvas.addEventListener('mousemove', function(e) {
+		var x = e.pageX - canvas.offsetLeft;
+		var y = e.pageY - canvas.offsetTop;		
+		for(element of elements) {
+			if(Math.pow(x-element.x,2) + Math.pow(y-element.y,2) < Math.pow(element.circleSize,2)) {
+				canvas.style.cursor = 'pointer';
+				break;
+			} else {
+				canvas.style.cursor = 'default';
+			}
+		}
+	});
+	
+	
+	
+	
+		
 	//all buttons have changeVal class, increment and decrement classes, unique IDs
 	function changeVal(element) {
 		var change = (element.classList.contains("increment")) ? 1 : -1;

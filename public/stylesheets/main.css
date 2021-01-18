@@ -127,6 +127,17 @@ input[type=range] + datalist option:last-child {
   font-weight: normal;
 }
 
+#endState {
+	width: 300px;
+	height: 300px;
+	margin: 15px;
+	user-select: none; /* standard syntax */
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
+}
+
 input[type="text"] {
 	width: 15%;
 }
