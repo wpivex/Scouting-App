@@ -1,8 +1,5 @@
 const express = require('express');
 const path = require('path');
-const idb = require('idb-keyval');
-const bodyParser = require("body-parser");
-const app = express();
 const PORT = process.env.PORT || 5000
 
 express()
