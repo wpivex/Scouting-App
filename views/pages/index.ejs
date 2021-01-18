@@ -74,30 +74,18 @@
         <br><br>
         <label for="comment">Comments: </label><br>
         <textarea id="comment" name="comment" rows="6" cols="40"></textarea><br><br>
-        <label for="percentScored">Out of the balls scored for the team, about what percent were scored by this
-            robot?</label><br>
-        0% <input type="range" min="0" max="100" id="percentScored" name="percentScored"> 100%<br><br>
     </div>
     <br><br>
     <button type="button" class="collapsible">Final Field State</button>
     <div class="content"><br>
-        <canvas width="300px" height="300px;" id="endState"></canvas>
+        <input class="ballInput" style="color: #AC2B37" type="number" id="finalRed" name="finalRed" value=0>
+        <button onclick="changeVal(this)" class="fr increment">+</button>
+        <button onclick="changeVal(this)" class="fr decrement">-</button><br><br>
+        <input class="ballInput" style="color: #4D4DFF" type="number" id="finalBlue" name="finalBlue" value=0>
+        <button onclick="changeVal(this)" class="fb increment">+</button>
+        <button onclick="changeVal(this)" class="fb decrement">-</button><br><br>
+        <canvas width="300" height="300" id="endState"></canvas>
         <br><br>
-        <!-- <label for="mobility">Mobility: </label><br> -->
-        <!-- <input type="range" min="0" max="10" id="mobility" name="mobility" list="steplist"> -->
-        <!-- <datalist id="steplist" style="--list-length: 11;">-->
-        <!--<option>0</option>-->
-        <!--<option>1</option>-->
-        <!--<option>2</option>-->
-        <!--<option>3</option>-->
-        <!--<option>4</option>-->
-        <!--<option>5</option>-->
-        <!--<option>6</option>-->
-        <!--<option>7</option>-->
-        <!--<option>8</option>-->
-        <!--<option>9</option>-->
-        <!--<option>10</option>-->
-        <!--</datalist><br><br> -->
     </div>
     <br><br><br>
     <button onclick="sendCurrent()" class="styledButton" type="submit">Send current match</button>
